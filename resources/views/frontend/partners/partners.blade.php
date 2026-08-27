@@ -1,25 +1,29 @@
-<section class="bg-silver-light">
-    <div class="container pt-50 pb-50">
+<section id="partners-section" class="bg-silver-light pt-35 pb-35" style="background-color: #f8faf9; border-top: 1px solid #e2ece9;">
+    <div class="container">
       <div class="row">
         <div class="col-md-12">          
-          <h3 class="text-uppercase title line-bottom mt-0 mb-30 text-center"><i class="fa fa-calendar text-gray-darkgray mr-10"></i>@if(session()->get('language')=='bangla') আমাদের প্রতিনিয়ত @elseif (session()->get('language') == 'arabic')
-            منتظمنا @else Our Regular @endif  <span class="text-theme-colored"> @if(session()->get('language')=='bangla') অংশীদার @elseif (session()->get('language') == 'arabic') الشركاء @else Partners @endif  </span></h3>
-          <!-- Section: Donors -->
-          <div class="owl-carousel-6col text-center">
+          <h3 class="text-uppercase title line-bottom mt-0 mb-20 text-center" style="font-size: 20px; font-weight: 700; color: #1b4332;">
+            <i class="fa fa-handshake-o text-theme-colored mr-10" style="color: #2d6a4f;"></i>
+            @if(session()->get('language')=='bangla') 
+                আমাদের সহযোগী ও <span class="text-theme-colored" style="color: #2d6a4f;">অংশীদারবৃন্দ</span>
+            @elseif (session()->get('language') == 'arabic')
+                شركاؤنا <span class="text-theme-colored">الكرام</span>
+            @else 
+                Our Regular <span class="text-theme-colored">Partners</span>
+            @endif
+          </h3>
+          
+          <!-- Section: Partners Showcase -->
+          <div class="owl-carousel-6col text-center" data-dots="false" data-nav="false" data-duration="5000" style="min-height: 80px;">
             @foreach($partners as $partner)
-            <div class="item"> <a href="#"><img src="{{ asset($partner->image) }}" alt=""></a></div>
+            <div class="item" style="padding: 10px 15px;"> 
+              <div style="background: #ffffff; border: 1px solid #e2ece9; border-radius: 8px; padding: 12px; height: 75px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.03); transition: all 0.3s ease;">
+                <img src="{{ asset($partner->image) }}" alt="{{ $partner->partner_name ?? 'Partner' }}" style="max-height: 50px; max-width: 100%; width: auto; object-fit: contain; margin: 0 auto; filter: grayscale(30%); transition: all 0.3s;" onmouseover="this.style.filter='none';" onmouseout="this.style.filter='grayscale(30%)';">
+              </div>
+            </div>
             @endforeach
-            {{-- <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/2.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/3.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/4.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/5.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/6.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/3.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/4.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/5.jpg') }}" alt=""></a></div>
-            <div class="item"> <a href="#"><img src="{{ asset('frontend/images/donors/6.jpg') }}" alt=""></a></div> --}}
           </div>
         </div>
       </div>
     </div>
-  </section>
+</section>

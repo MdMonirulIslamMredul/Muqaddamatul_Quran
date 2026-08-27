@@ -1,249 +1,312 @@
- <!-- Slider Section Start -->
+<!-- Modern Hero Slider Section Start -->
+<section id="hero-slider-section" class="p-0 position-relative" style="overflow: hidden; background: #081c15;">
 
- <div id="bannerCarousel" class="carousel slide" data-ride="carousel">
-     <!-- Indicators -->
-     <ol class="carousel-indicators">
-         @foreach ($banners as $key => $banner)
-         <li data-target="#bannerCarousel" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
-         @endforeach
-     </ol>
+    <div id="bannerCarousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="6500" data-pause="hover" style="position: relative;">
+        
+        <!-- Indicators (Only show if multiple banners exist) -->
+        @if(count($banners) > 1)
+        <ol class="carousel-indicators" style="bottom: 22px; z-index: 15; margin-bottom: 0;">
+            @foreach ($banners as $key => $banner)
+                <li data-target="#bannerCarousel" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" 
+                    style="width: 28px; height: 6px; border-radius: 4px; background-color: rgba(255, 255, 255, 0.4); border: none; margin: 0 4px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;"></li>
+            @endforeach
+        </ol>
+        @endif
 
-     <!-- Wrapper for slides -->
-     <div class="carousel-inner">
-         @foreach ($banners as $key => $banner)
-         <div class="item {{ $key == 0 ? 'active' : '' }}">
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            @foreach ($banners as $key => $banner)
+                <div class="item {{ $key == 0 ? 'active' : '' }}">
+                    
+                    <!-- Background Image with Ken Burns / Zoom Animation -->
+                    <div class="hero-bg-img" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('{{ asset($banner->image) }}') no-repeat center right; background-size: cover; z-index: 0;"></div>
 
-             <img src="{{ asset($banner->image) }}" alt="{{ $banner->title }}" class="img-responsive"
-                 style="height: 580px; width: 100%; object-fit: cover;">
+                    <!-- Deep Emerald / Forest Green Gradient Overlay -->
+                    <div class="hero-gradient-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #071f14 0%, rgba(7, 31, 20, 0.96) 35%, rgba(11, 46, 29, 0.85) 55%, rgba(11, 46, 29, 0.45) 75%, rgba(5, 20, 13, 0.65) 100%); z-index: 1;"></div>
 
-             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center"
-                 style="top: 60%; transform: translateY(-50%);">
-                 @if (session()->get('language') == 'bangla')
-                 {{ $banner->title_bn }}
-                 @elseif (session()->get('language') == 'arabic')
-                 {{ $banner->title_ab }}
-                 @else
-                 <h2 class="text-white">{{ $banner->title }}</h2>
-                 @endif
+                    <!-- Slide Content with Staggered Entrance Animations -->
+                    <div class="container" style="position: relative; z-index: 2; height: 100%; min-height: 560px; display: flex; align-items: center;">
+                        <div class="row" style="width: 100%; margin: 0; padding: 60px 0;">
+                            
+                            <div class="col-lg-8 col-md-9 col-sm-12" style="padding-left: 10px;">
+                                
+                                <!-- Main Title -->
+                                <h1 class="hero-title text-white font-weight-800 hero-anim-item anim-title" 
+                                    style="font-size: 42px; line-height: 1.3; margin-top: 0; margin-bottom: 18px; font-family: 'SolaimanLipi', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif; text-shadow: 0 2px 10px rgba(0,0,0,0.35);">
+                                    {{ $banner->localized_title }}
+                                </h1>
 
-                 <p>{{ $banner->short_details }}</p>
+                                <!-- Description Paragraph -->
+                                <p class="hero-description text-white hero-anim-item anim-desc" 
+                                   style="font-size: 15px; line-height: 1.8; color: #f3f4f6; max-width: 640px; margin-bottom: 26px; text-shadow: 0 1px 6px rgba(0,0,0,0.4); opacity: 0.95;">
+                                    {{ $banner->localized_details }}
+                                </p>
 
-                 <a class="btn btn-theme-colored btn-circled pl-20 pr-20" href="{{ route('all.donation') }}">
-                     @if(session()->get('language') == 'bangla')
-                     দান করুন
-                     @elseif (session()->get('language') == 'arabic')
-                     تبرع الآن
-                     @else
-                     Donate Now
-                     @endif
-                 </a>
-             </div>
+                                <!-- CTA Action Button -->
+                                <div class="hero-action-btn mb-30 hero-anim-item anim-btn" style="margin-bottom: 30px;">
+                                    <a href="{{ $banner->button_url ?: route('online.admission') }}" 
+                                       class="btn-gradient-pill" 
+                                       style="background: linear-gradient(90deg, #d81159 0%, #e63946 35%, #ff7b00 100%); color: #ffffff !important; font-weight: 700; font-size: 15px; padding: 11px 32px; border-radius: 50px; border: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 6px 20px rgba(216, 17, 89, 0.45); text-decoration: none; transition: all 0.3s ease;">
+                                        <span>{{ $banner->localized_button_text ?: 'ই-ক্যাম্পাস' }}</span>
+                                        <i class="fa fa-arrow-right" style="font-size: 13px;"></i>
+                                    </a>
+                                </div>
 
-         </div>
-         @endforeach
-     </div>
+                                <!-- Achievements / Success Section -->
+                                <div class="hero-achievements-wrapper hero-anim-item anim-stats" style="border-top: 1px solid rgba(255,255,255,0.12); padding-top: 22px;">
+                                    
+                                    <span class="achievement-subtitle" 
+                                          style="font-size: 13px; font-weight: 600; color: #e2e8f0; margin-bottom: 14px; display: block; letter-spacing: 0.3px;">
+                                        {{ $banner->achievement_subtitle ?: 'বিগত ৫ বছর ধরে আমাদের সাফল্য' }}
+                                    </span>
 
-     <!-- Left and right controls -->
-     <a class="left carousel-control" href="#bannerCarousel" data-slide="prev">
-         <span class="glyphicon glyphicon-chevron-left"></span>
-         <span class="sr-only">Previous</span>
-     </a>
-     <a class="right carousel-control" href="#bannerCarousel" data-slide="next">
-         <span class="glyphicon glyphicon-chevron-right"></span>
-         <span class="sr-only">Next</span>
-     </a>
- </div>
+                                    <!-- 3 Stat Badges in a Row -->
+                                    <div class="achievement-badges-row" style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                                        
+                                        <!-- Stat 1: Students -->
+                                        <div class="stat-badge-item" style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="stat-icon-box" style="width: 44px; height: 44px; border-radius: 8px; background: rgba(255, 159, 28, 0.15); border: 1px solid rgba(255, 159, 28, 0.35); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                <i class="fa fa-graduation-cap" style="color: #ff9f1c; font-size: 20px;"></i>
+                                            </div>
+                                            <div class="stat-text-box">
+                                                <span class="stat-num" style="font-size: 16px; font-weight: 800; color: #ffffff; display: block; line-height: 1.1;">
+                                                    {{ $banner->stat1_value ?: '১০,০০০' }}
+                                                </span>
+                                                <span class="stat-lbl" style="font-size: 12px; color: #cbd5e1; display: block; margin-top: 2px;">
+                                                    {{ $banner->stat1_label ?: 'শিক্ষার্থী' }}
+                                                </span>
+                                            </div>
+                                        </div>
 
+                                        <!-- Stat 2: Teachers -->
+                                        <div class="stat-badge-item" style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="stat-icon-box" style="width: 44px; height: 44px; border-radius: 8px; background: rgba(46, 196, 182, 0.15); border: 1px solid rgba(46, 196, 182, 0.35); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                <i class="fa fa-mortar-board" style="color: #2ec4b6; font-size: 20px;"></i>
+                                            </div>
+                                            <div class="stat-text-box">
+                                                <span class="stat-num" style="font-size: 16px; font-weight: 800; color: #ffffff; display: block; line-height: 1.1;">
+                                                    {{ $banner->stat2_value ?: '৪০+' }}
+                                                </span>
+                                                <span class="stat-lbl" style="font-size: 12px; color: #cbd5e1; display: block; margin-top: 2px;">
+                                                    {{ $banner->stat2_label ?: 'শিক্ষক' }}
+                                                </span>
+                                            </div>
+                                        </div>
 
- <!-- Slider Section End -->
+                                        <!-- Stat 3: Success Rate -->
+                                        <div class="stat-badge-item" style="display: flex; align-items: center; gap: 10px;">
+                                            <div class="stat-icon-box" style="width: 44px; height: 44px; border-radius: 8px; background: rgba(131, 56, 236, 0.15); border: 1px solid rgba(131, 56, 236, 0.35); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                <i class="fa fa-check-circle" style="color: #b588f7; font-size: 20px;"></i>
+                                            </div>
+                                            <div class="stat-text-box">
+                                                <span class="stat-num" style="font-size: 16px; font-weight: 800; color: #ffffff; display: block; line-height: 1.1;">
+                                                    {{ $banner->stat3_value ?: '৮৯%' }}
+                                                </span>
+                                                <span class="stat-lbl" style="font-size: 12px; color: #cbd5e1; display: block; margin-top: 2px;">
+                                                    {{ $banner->stat3_label ?: 'কোর্স কমপ্লিট রেট' }}
+                                                </span>
+                                            </div>
+                                        </div>
 
+                                    </div>
 
+                                </div>
 
- {{-- <section id="home">
+                            </div>
 
-    <div class="container-fluid p-0">
+                        </div>
+                    </div>
 
-        <!-- Slider Revolution Start -->
-        <div class="rev_slider_wrapper">
-            <div class="rev_slider rev_slider_default" data-version="5.0">
-                <ul>
-                    <!-- SLIDE 1 -->
-                    @foreach ($banners as $banner)
-                        <li data-index="rs-1" data-transition="fade" data-slotamount="7" data-hideafterloop="0"
-                            data-hideslideonmobile="off" data-easein="default" data-easeout="default"
-                            data-masterspeed="300" data-thumb="{{ asset('frontend/images/bg/bg5.jpg') }}"
- data-rotate="0" data-saveperformance="off" data-title="Slide 1" data-description="">
- <!-- MAIN IMAGE -->
- <img src="{{ asset($banner->image) }} " alt="" data-bgposition="center center" data-bgfit="cover"
-     data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
- <!-- LAYERS -->
+                </div>
+            @endforeach
+        </div>
 
- <!-- LAYER NR. 1 -->
- <div class="tp-caption tp-resizeme text-uppercase text-white font-raleway pl-30 pr-30" id="rs-1-layer-1"
-     data-x="['center']" data-hoffset="['0']" data-y="['middle']" data-voffset="['-90']" data-fontsize="['28']"
-     data-lineheight="['54']" data-width="none" data-height="none" data-whitespace="nowrap"
-     data-transform_idle="o:1;s:500" data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-     data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-     data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-     data-start="1000" data-splitin="none" data-splitout="none" data-responsive_offset="on"
-     style="z-index: 7; white-space: nowrap; font-weight:400; border-radius: 30px;">
-     @if (session()->get('language') == 'bangla')
-     {{ $banner->title_bn }}
-     @elseif (session()->get('language') == 'arabic')
-     {{ $banner->title_ab }}
-     @else
-     {{ $banner->title }}
-     @endif
- </div>
+        <!-- Left and right navigation controls (Only if multiple banners) -->
+        @if(count($banners) > 1)
+        <a class="left carousel-control hero-nav-btn" href="#bannerCarousel" data-slide="prev" 
+           style="background: none; width: 60px; z-index: 10; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s ease;">
+            <span class="carousel-arrow-icon" style="font-size: 18px; color: #fff; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <i class="fa fa-chevron-left"></i>
+            </span>
+        </a>
+        <a class="right carousel-control hero-nav-btn" href="#bannerCarousel" data-slide="next" 
+           style="background: none; width: 60px; z-index: 10; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.3s ease;">
+            <span class="carousel-arrow-icon" style="font-size: 18px; color: #fff; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <i class="fa fa-chevron-right"></i>
+            </span>
+        </a>
+        @endif
 
- <!-- LAYER NR. 2 -->
- <div class="tp-caption tp-resizeme text-uppercase bg-theme-colored-transparent text-white font-raleway pl-30 pr-30"
-     id="rs-1-layer-2" data-x="['center']" data-hoffset="['0']" data-y="['middle']" data-voffset="['-20']"
-     data-fontsize="['48']" data-lineheight="['70']" data-width="none" data-height="none" data-whitespace="nowrap"
-     data-transform_idle="o:1;s:500" data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-     data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-     data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-     data-start="1000" data-splitin="none" data-splitout="none" data-responsive_offset="on"
-     style="z-index: 7; white-space: nowrap; font-weight:700; border-radius: 30px;">
-     @if (session()->get('language') == 'bangla')
-     দাতব্য ফাউন্ডেশন
-     @elseif (session()->get('language') == 'arabic')
-     مؤسسة خيرية
-     @else
-     Charity
-     Foundation
-     @endif
- </div>
+    </div>
 
- <!-- LAYER NR. 3 -->
- <div class="tp-caption tp-resizeme text-white text-center" id="rs-1-layer-3" data-x="['center']" data-hoffset="['0']"
-     data-y="['middle']" data-voffset="['50']" data-fontsize="['16','18',24']" data-lineheight="['28']"
-     data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;s:500"
-     data-transform_in="y:100;scaleX:1;scaleY:1;opacity:0;"
-     data-transform_out="x:left(R);s:1000;e:Power3.easeIn;s:1000;e:Power3.easeIn;"
-     data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-     data-start="1400" data-splitin="none" data-splitout="none" data-responsive_offset="on"
-     style="z-index: 5; white-space: nowrap; font-weight:400;">@if (session()->get('language') == 'bangla')
-     {{ $banner->short_details_bn }}
-     @elseif (session()->get('language') == 'arabic')
-     {{ $banner->short_details_ab }}
-     @else
-     {{ $banner->short_details }}
-     @endif
- </div>
+</section>
+<!-- Modern Hero Slider Section End -->
 
- <!-- LAYER NR. 4 -->
- <div class="tp-caption tp-resizeme" id="rs-1-layer-4" data-x="['center']" data-hoffset="['0']" data-y="['middle']"
-     data-voffset="['115']" data-width="none" data-height="none" data-whitespace="nowrap" data-transform_idle="o:1;"
-     data-transform_in="y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;s:2000;e:Power4.easeInOut;"
-     data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;s:1000;e:Power2.easeInOut;"
-     data-mask_in="x:0px;y:[100%];s:inherit;e:inherit;" data-mask_out="x:inherit;y:inherit;s:inherit;e:inherit;"
-     data-start="1400" data-splitin="none" data-splitout="none" data-responsive_offset="on"
-     style="z-index: 5; white-space: nowrap; letter-spacing:1px;"><a class="btn btn-default btn-circled pl-20 pr-20"
-         href="#">@if(session()->get('language')=='bangla') বিস্তারিত দেখুন @elseif
-         (session()->get('language')=='arabic') عرض التفاصيل @else View Details @endif</a>
-     <a class="btn btn-theme-colored btn-circled pl-20 pr-20"
-         href="{{ route('all.donation')}}">@if(session()->get('language')=='bangla') দান করুন @elseif
-         (session()->get('language')=='arabic') تبرع الآن @else Donate Now @endif</a>
- </div>
- </li>
- @endforeach
+<style>
+/* ================= HERO SLIDER & SEAMLESS FADE ANIMATIONS ================= */
+#hero-slider-section {
+    position: relative;
+    overflow: hidden;
+    background: #081c15;
+}
 
+.carousel-fade .carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 560px;
+    min-height: 560px;
+    overflow: hidden;
+}
 
+.carousel-fade .carousel-inner .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    opacity: 0;
+    display: none;
+    z-index: 1;
+    transition: opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
- </ul>
- </div>
- <!-- end .rev_slider -->
- </div>
- <!-- end .rev_slider_wrapper -->
- <script>
-     $(document).ready(function (e) {
-         var revapi = $(".rev_slider_default").revolution({
-             sliderType: "standard",
-             jsFileLocation: "js/revolution-slider/js/",
-             sliderLayout: "auto",
-             dottedOverlay: "none",
-             delay: 5000,
-             navigation: {
-                 keyboardNavigation: "off",
-                 keyboard_direction: "horizontal",
-                 mouseScrollNavigation: "off",
-                 onHoverStop: "off",
-                 touch: {
-                     touchenabled: "on",
-                     swipe_threshold: 75,
-                     swipe_min_touches: 1,
-                     swipe_direction: "horizontal",
-                     drag_block_vertical: false
-                 },
-                 arrows: {
-                     style: "gyges",
-                     enable: true,
-                     hide_onmobile: false,
-                     hide_onleave: true,
-                     hide_delay: 200,
-                     hide_delay_mobile: 1200,
-                     tmp: '',
-                     left: {
-                         h_align: "left",
-                         v_align: "center",
-                         h_offset: 0,
-                         v_offset: 0
-                     },
-                     right: {
-                         h_align: "right",
-                         v_align: "center",
-                         h_offset: 0,
-                         v_offset: 0
-                     }
-                 },
-                 bullets: {
-                     enable: true,
-                     hide_onmobile: true,
-                     hide_under: 800,
-                     style: "hebe",
-                     hide_onleave: false,
-                     direction: "horizontal",
-                     h_align: "center",
-                     v_align: "bottom",
-                     h_offset: 0,
-                     v_offset: 30,
-                     space: 5,
-                     tmp: '<span class="tp-bullet-image"></span><span class="tp-bullet-imageoverlay"></span><span class="tp-bullet-title"></span>'
-                 }
-             },
-             responsiveLevels: [1240, 1024, 778],
-             visibilityLevels: [1240, 1024, 778],
-             gridwidth: [1170, 1024, 778, 480],
-             gridheight: [680, 500, 400, 300],
-             lazyType: "none",
-             parallax: "mouse",
-             parallaxBgFreeze: "off",
-             parallaxLevels: [2, 3, 4, 5, 6, 7, 8, 9, 10, 1],
-             shadow: 0,
-             spinner: "off",
-             stopLoop: "on",
-             stopAfterLoops: 0,
-             stopAtSlide: -1,
-             shuffle: "off",
-             autoHeight: "off",
-             fullScreenAutoWidth: "off",
-             fullScreenAlignForce: "off",
-             fullScreenOffsetContainer: "",
-             fullScreenOffset: "0",
-             hideThumbsOnMobile: "off",
-             hideSliderAtLimit: 0,
-             hideCaptionAtLimit: 0,
-             hideAllCaptionAtLilmit: 0,
-             debugMode: false,
-             fallbacks: {
-                 simplifyAll: "off",
-                 nextSlideOnWindowFocus: "off",
-                 disableFocusListener: false,
-             }
-         });
-     });
- </script>
- <!-- Slider Revolution Ends -->
- </div>
- </section> --}}
+.carousel-fade .carousel-inner .item.active,
+.carousel-fade .carousel-inner .item.next,
+.carousel-fade .carousel-inner .item.prev {
+    display: block;
+}
+
+.carousel-fade .carousel-inner .item.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.carousel-fade .carousel-inner .item.next.left,
+.carousel-fade .carousel-inner .item.prev.right {
+    opacity: 1;
+    z-index: 2;
+}
+
+.carousel-fade .carousel-inner .item.active.left,
+.carousel-fade .carousel-inner .item.active.right {
+    opacity: 0;
+    z-index: 1;
+}
+
+.carousel-fade .carousel-control {
+    z-index: 10;
+}
+
+/* ================= SLOW CINEMATIC KEN BURNS BACKGROUND ZOOM ================= */
+.hero-bg-img {
+    transform: scale(1);
+    transform-origin: center center;
+    transition: transform 7s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+
+.carousel-fade .carousel-inner .item.active .hero-bg-img {
+    transform: scale(1.08);
+}
+
+/* ================= STAGGERED TEXT & CONTENT ENTRANCE ANIMATIONS ================= */
+.hero-anim-item {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+.carousel-fade .carousel-inner .item.active .anim-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.15s;
+}
+
+.carousel-fade .carousel-inner .item.active .anim-desc {
+    opacity: 0.95;
+    transform: translateY(0);
+    transition-delay: 0.32s;
+}
+
+.carousel-fade .carousel-inner .item.active .anim-btn {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.48s;
+}
+
+.carousel-fade .carousel-inner .item.active .anim-stats {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.62s;
+}
+
+/* ================= CONTROLS & INDICATORS STYLING ================= */
+#bannerCarousel:hover .hero-nav-btn {
+    opacity: 1 !important;
+}
+
+.hero-nav-btn:hover .carousel-arrow-icon {
+    background: rgba(45, 106, 79, 0.9) !important;
+    border-color: #52b788 !important;
+    transform: scale(1.12);
+    box-shadow: 0 6px 20px rgba(82, 183, 136, 0.45) !important;
+}
+
+.carousel-indicators li {
+    background-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.carousel-indicators li.active {
+    background: linear-gradient(90deg, #ff7b00 0%, #ff9f1c 100%) !important;
+    width: 38px !important;
+    box-shadow: 0 0 10px rgba(255, 123, 0, 0.6) !important;
+}
+
+.btn-gradient-pill:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(216, 17, 89, 0.6) !important;
+}
+
+/* ================= RESPONSIVE ADJUSTMENTS ================= */
+@media (max-width: 768px) {
+    .carousel-fade .carousel-inner,
+    .carousel-fade .carousel-inner .item {
+        height: auto !important;
+        min-height: 520px !important;
+    }
+    .hero-title {
+        font-size: 26px !important;
+        line-height: 1.35 !important;
+    }
+    .hero-description {
+        font-size: 13.5px !important;
+        line-height: 1.65 !important;
+        margin-bottom: 20px !important;
+    }
+    .achievement-badges-row {
+        gap: 12px !important;
+    }
+    .stat-badge-item {
+        gap: 8px !important;
+    }
+    .stat-icon-box {
+        width: 38px !important;
+        height: 38px !important;
+    }
+    .stat-icon-box i {
+        font-size: 16px !important;
+    }
+    .stat-num {
+        font-size: 14px !important;
+    }
+    .stat-lbl {
+        font-size: 11px !important;
+    }
+    .hero-nav-btn {
+        display: none !important;
+    }
+}
+</style>
+
