@@ -2,6 +2,36 @@
 
 @push('frontend_style')
     <style>
+        /* Section Padding & Spacing Normalization */
+        .main-content section > .container,
+        .main-content section > .container-fluid {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .main-content section {
+            padding-top: 45px !important;
+            padding-bottom: 45px !important;
+        }
+        #hero-slider-section {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .notice-ticker-wrapper {
+            margin-bottom: 0 !important;
+        }
+        .section-title {
+            margin-bottom: 25px !important;
+        }
+        @media (max-width: 767px) {
+            .main-content section {
+                padding-top: 30px !important;
+                padding-bottom: 30px !important;
+            }
+            .section-title {
+                margin-bottom: 20px !important;
+            }
+        }
+
         .owl-carousel-4col.owl-carousel .owl-stage {
             border-radius: 10px !important;
             overflow: hidden;
@@ -88,57 +118,30 @@
     @include('frontend.slider.slider')
     <!-- Slider Section End -->
 
-    <!-- Section: About -->
-    {{-- <section>
-      <div class="container">
-        <div class="section-content text-center">
-          <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-3 mb-sm-40 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-              <img class="img-circle img-thumbnail mb-15" src="{{ asset('frontend/images/about/sq1.jpg') }}" alt="">
-              <h4>Save water from polution</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero omnis unde nesciunt?</p>
-              <a href="#" class="btn btn-sm btn-theme-colored">Read more</a>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 mb-sm-40 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.4s">
-              <img class="img-circle img-thumbnail mb-15" src="{{ asset('frontend/images/about/sq2.jpg') }}" alt="">
-              <h4>Make the world greener</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero omnis unde nesciunt?</p>
-              <a href="#" class="btn btn-sm btn-theme-colored">Read more</a>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 mb-sm-40 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
-              <img class="img-circle img-thumbnail mb-15" src="{{ asset('frontend/images/about/sq3.jpg') }}" alt="">
-              <h4>Help to balance eco system</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero omnis unde nesciunt?</p>
-              <a href="#" class="btn btn-sm btn-theme-colored">Read more</a>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-3 mb-sm-0 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.6s">
-              <img class="img-circle img-thumbnail mb-15" src="{{ asset('frontend/images/about/sq4.jpg') }}" alt="">
-              <h4>Help to balance eco system</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero omnis unde nesciunt?</p>
-              <a href="#" class="btn btn-sm btn-theme-colored">Read more</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> --}}
+    <!-- Breaking Notice Ticker Start -->
+    @include('frontend.notice.ticker')
+    <!-- Breaking Notice Ticker End -->
+
+    <!-- Section: Notice Board Widget Start -->
+    @include('frontend.notice.notice_section')
+    <!-- Section: Notice Board Widget End -->
 
     <!-- Section: About -->
-    <section class="">
+    <section class="about-section pt-45 pb-45" style="background: #ffffff;">
         <div class="container">
             <div class="section-content">
-                <div class="row">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-5 fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                <div class="row" style="display: flex; align-items: center; flex-wrap: wrap;">
+                    <div class="col-lg-1 hidden-md hidden-sm hidden-xs"></div>
+                    <div class="col-lg-5 col-md-6 fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
                         <div class="text-center">
                             @if(isset($about) && ($about->image1 || $about->banner_image))
                                 <img src="{{ asset($about->image1 ?? $about->banner_image) }}" alt="About Image"
-                                    style="width:100%;max-width:400px;height:400px;border: 1px solid #ddd;border-radius: 5px; padding: 5px; object-fit: cover;">
+                                    style="width:100%;max-width:400px;height:auto;max-height:380px;border: 1px solid #ddd;border-radius: 8px; padding: 5px; object-fit: cover; box-shadow: 0 4px 15px rgba(0,0,0,0.06);">
                             @endif
                         </div>
                     </div>
-                    <div class="col-lg-5 wow fadeInLeft" style="margin-top: 100px;" data-wow-duration="1s"
-                        data-wow-delay="0.3s">
-                        <h2 class="text-uppercase mt-0">
+                    <div class="col-lg-5 col-md-6 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <h2 class="text-uppercase mt-0" style="color: #1b4332; font-weight: 700; font-size: 26px; margin-bottom: 15px;">
                             @if (session()->get('language') == 'bangla')
                                 {{ $about->title_bangla }}
                             @elseif (session()->get('language') == 'arabic')
@@ -148,7 +151,7 @@
                             @endif
                         </h2>
 
-                        <p>
+                        <div style="color: #4a5568; line-height: 1.8; font-size: 14.5px;">
                             @if (session()->get('language') == 'bangla')
                                 {!! $about->des_bangla !!}
                             @elseif (session()->get('language') == 'arabic')
@@ -156,24 +159,24 @@
                             @else
                                 {!! $about->des_eng !!}
                             @endif
-                        </p>
+                        </div>
                     </div>
-
-                    {{-- <div class="col-md-6 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
-
-
-                  <img class="" src="{{ asset('frontend/images/about/ab1.jpg') }}" alt="" >
-
-
-
-            </div> --}}
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Section: Academic Departments & Courses (Inspired by nlquran.net) -->
+    @include('frontend.courses.course_departments')
+
+    <!-- Section: Why Choose Us (Inspired by nlquran.net) -->
+    @include('frontend.features.why_choose_us')
+
+    <!-- Section: 4-Step Admission Journey (Inspired by nlquran.net) -->
+    @include('frontend.admission.admission_steps')
+
     <!-- Section: Donation start -->
-    @include('frontend.donation.donation')
+    {{-- @include('frontend.donation.donation') --}}
     <!-- Section: Donation end -->
 
     <!-- Section: project start -->
@@ -181,39 +184,12 @@
     <!-- Section: project end  -->
 
     <!-- Section: project start -->
-    @include('frontend.activities.activities')
+
+    {{-- @include('frontend.activities.activities') --}}
+
     <!-- Section: project end  -->
 
-    {{-- <section class="bg-silver-light">
-      <div class="container">
-        <div class="section-content">
-          <div class="row">
-            <div class="col-md-6">
-              <h2 class="text-uppercase mt-0">Welcome To <span class="text-theme-colored">Ecocharity</span><br> HTML5 Tempalte</h2>
-              <h4 class="text-gray-dimgray font-weight-400"><em>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</em></h4>
-              <p>Sit amet consectetur adipisicing elit. Aliquid iste iusto reiciendis praesentium dolorem doloribus nisi architecto voluptatibus explicabo, possimus ullam quae illum maiores aperiam consequuntur.</p>
-              <p>Sit amet consectetur adipisicing elit. Aliquid iste iusto reiciendis praesentium dolorem doloribus nisi architecto voluptatibus explicabo, possimus ullam quae illum maiores aperiam consequuntur facere similique voluptatum.</p>
-              <a href="#" class="btn btn-flat btn-theme-colored text-uppercase mt-20 mb-sm-30 border-left-theme-color-2-4px">Read More</a>
-            </div>
-            <div class="col-md-6">
-              <div class="row mb-10">
-                <div class="col-md-12">
-                  <img class="img-fullwidth" src="{{ asset('frontend/images/about/ab1.jpg') }}" alt="">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 pr-5 pr-sm-15 mb-sm-10">
-                  <img class="img-fullwidth" src="{{ asset('frontend/images/about/ab2.jpg') }}" alt="">
-                </div>
-                <div class="col-md-6 pl-5 pl-sm-15">
-                  <img class="img-fullwidth" src="{{ asset('frontend/images/about/ab3.jpg') }}" alt="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> --}}
+   
 
     <!-- Section: Campaign -->
     {{-- <section>
@@ -333,360 +309,18 @@
       </div>
     </section> --}}
 
-    <!-- Section: DonetForm & Testimonials -->
-    {{-- <section class="bg-silver-light">
-      <div class="container pb-40">
-        <div class="section-content">
-          <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6 wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-              <h3 class="text-uppercase title line-bottom-double-line mt-0 mb-30"><i class="fa fa-cc-mastercard text-theme-colored mr-10"></i>Please  <span class="text-theme-colored font-weight-800">Donate </span>for Our Campaign!</h3>
+    
 
-              <!-- ===== START: Paypal Both Onetime/Recurring Form ===== -->
-              <form id="paypal_donate_form_onetime_recurring">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group mb-20">
-                      <label><strong>Payment Type</strong></label> <br>
-                      <label class="radio-inline">
-                        <input type="radio" checked="" value="one_time" name="payment_type">
-                        One Time
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" value="recurring" name="payment_type">
-                        Recurring
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12" id="donation_type_choice">
-                    <div class="form-group mb-20">
-                      <label><strong>Donation Type</strong></label>
-                      <div class="radio mt-5">
-                        <label class="radio-inline">
-                          <input type="radio" value="D" name="t3" checked="">
-                          Daily</label>
-                        <label class="radio-inline">
-                          <input type="radio" value="W" name="t3">
-                          Weekly</label>
-                        <label class="radio-inline">
-                          <input type="radio" value="M" name="t3">
-                          Monthly</label>
-                        <label class="radio-inline">
-                          <input type="radio" value="Y" name="t3">
-                          Yearly</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <div class="form-group mb-20">
-                      <label><strong>I Want to Donate for</strong></label>
-                      <select name="item_name" class="form-control">
-                        <option value="Educate Children">Educate Children</option>
-                        <option value="Child Camps">Child Camps</option>
-                        <option value="Clean Water for Life">Clean Water for Life</option>
-                        <option value="Campaign for Child Poverty">Campaign for Child Poverty</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <div class="form-group mb-20">
-                      <label><strong>Currency</strong></label>
-                      <select name="currency_code" class="form-control">
-                        <option value="">Select Currency</option>
-                        <option value="USD" selected="selected">USD - U.S. Dollars</option>
-                        <option value="AUD">AUD - Australian Dollars</option>
-                        <option value="BRL">BRL - Brazilian Reais</option>
-                        <option value="GBP">GBP - British Pounds</option>
-                        <option value="HKD">HKD - Hong Kong Dollars</option>
-                        <option value="HUF">HUF - Hungarian Forints</option>
-                        <option value="INR">INR - Indian Rupee</option>
-                        <option value="ILS">ILS - Israeli New Shekels</option>
-                        <option value="JPY">JPY - Japanese Yen</option>
-                        <option value="MYR">MYR - Malaysian Ringgit</option>
-                        <option value="MXN">MXN - Mexican Pesos</option>
-                        <option value="TWD">TWD - New Taiwan Dollars</option>
-                        <option value="NZD">NZD - New Zealand Dollars</option>
-                        <option value="NOK">NOK - Norwegian Kroner</option>
-                        <option value="PHP">PHP - Philippine Pesos</option>
-                        <option value="PLN">PLN - Polish Zlotys</option>
-                        <option value="RUB">RUB - Russian Rubles</option>
-                        <option value="SGD">SGD - Singapore Dollars</option>
-                        <option value="SEK">SEK - Swedish Kronor</option>
-                        <option value="CHF">CHF - Swiss Francs</option>
-                        <option value="THB">THB - Thai Baht</option>
-                        <option value="TRY">TRY - Turkish Liras</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12">
-                    <div class="form-group mb-20">
-                      <label><strong>How much do you want to donate?</strong></label>
-                      <select name="amount" class="form-control">
-                          <option value="20">20</option>
-                          <option value="50">50</option>
-                          <option value="100">100</option>
-                          <option value="200">200</option>
-                          <option value="500">500</option>
-                          <option value="other">Other Amount</option>
-                      </select>
-                      <div id="custom_other_amount">
-                        <label><strong>Custom Amount:</strong></label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12">
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-flat btn-dark btn-theme-colored mt-10 pl-30 pr-30" data-loading-text="Please wait...">Donate Now</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-
-
-              <!-- Script for Donation Form Custom Amount -->
-              <script type="text/javascript">
-                $(document).ready(function(e) {
-                  var $donation_form = $("#paypal_donate_form_onetime_recurring");
-                  //toggle custom amount
-                  var $custom_other_amount = $donation_form.find("#custom_other_amount");
-                  $custom_other_amount.hide();
-                  $donation_form.find("select[name='amount']").change(function() {
-                      var $this = $(this);
-                      if ($this.val() == 'other') {
-                        $custom_other_amount.show().append('<div class="input-group"><span class="input-group-addon">$</span> <input id="input_other_amount" type="text" name="amount" class="form-control" value="100"/></div>');
-                      }
-                      else{
-                        $custom_other_amount.children( ".input-group" ).remove();
-                        $custom_other_amount.hide();
-                      }
-                  });
-
-                  //toggle donation_type_choice
-                  var $donation_type_choice = $donation_form.find("#donation_type_choice");
-                  $donation_type_choice.hide();
-                  $("input[name='payment_type']").change(function() {
-                      if (this.value == 'recurring') {
-                          $donation_type_choice.show();
-                      }
-                      else {
-                          $donation_type_choice.hide();
-                      }
-                  });
-
-
-                  // submit form on click
-                  $donation_form.on('submit', function(e){
-                          $( "#paypal_donate_form-onetime" ).submit();
-                      var item_name = $donation_form.find("select[name='item_name'] option:selected").val();
-                      var currency_code = $donation_form.find("select[name='currency_code'] option:selected").val();
-                      var amount = $donation_form.find("select[name='amount'] option:selected").val();
-                      var t3 = $donation_form.find("input[name='t3']:checked").val();
-
-                      if ( amount == 'other') {
-                        amount = $donation_form.find("#input_other_amount").val();
-                      }
-
-                      // submit proper form now
-                      if ( $("input[name='payment_type']:checked", $donation_form).val() == 'recurring' ) {
-                          var recurring_form = $('#paypal_donate_form-recurring');
-
-                          recurring_form.find("input[name='item_name']").val(item_name);
-                          recurring_form.find("input[name='currency_code']").val(currency_code);
-                          recurring_form.find("input[name='a3']").val(amount);
-                          recurring_form.find("input[name='t3']").val(t3);
-
-                          recurring_form.find("input[type='submit']").trigger('click');
-
-                      } else if ( $("input[name='payment_type']:checked", $donation_form).val() == 'one_time' ) {
-                          var onetime_form = $('#paypal_donate_form-onetime');
-
-                          onetime_form.find("input[name='item_name']").val(item_name);
-                          onetime_form.find("input[name='currency_code']").val(currency_code);
-                          onetime_form.find("input[name='amount']").val(amount);
-
-                          onetime_form.find("input[type='submit']").trigger('click');
-                      }
-                      return false;
-                  });
-
-                });
-              </script>
-
-              <!-- Paypal Onetime Form -->
-              <form id="paypal_donate_form-onetime" class="hidden" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                <input type="hidden" name="cmd" value="_donations">
-                <input type="hidden" name="business" value="accounts@thememascot.com">
-
-                <input type="hidden" name="item_name" value="Educate Children"> <!-- updated dynamically -->
-                <input type="hidden" name="currency_code" value="USD"> <!-- updated dynamically -->
-                <input type="hidden" name="amount" value="20"> <!-- updated dynamically -->
-
-                <input type="hidden" name="no_shipping" value="1">
-                <input type="hidden" name="cn" value="Comments...">
-                <input type="hidden" name="tax" value="0">
-                <input type="hidden" name="lc" value="US">
-                <input type="hidden" name="bn" value="PP-DonationsBF">
-                <input type="hidden" name="return" value="http://www.yoursite.com/thankyou.html">
-                <input type="hidden" name="cancel_return" value="http://www.yoursite.com/paymentcancel.html">
-                <input type="hidden" name="notify_url" value="http://www.yoursite.com/notifypayment.php">
-                <input type="submit" name="submit">
-              </form>
-
-              <!-- Paypal Recurring Form -->
-              <form id="paypal_donate_form-recurring" class="hidden" action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                <input type="hidden" name="cmd" value="_xclick-subscriptions">
-                <input type="hidden" name="business" value="accounts@thememascot.com">
-
-                <input type="hidden" name="item_name" value="Educate Children"> <!-- updated dynamically -->
-                <input type="hidden" name="currency_code" value="USD"> <!-- updated dynamically -->
-                <input type="hidden" name="a3" value="20"> <!-- updated dynamically -->
-                <input type="hidden" name="t3" value="D"> <!-- updated dynamically -->
-
-
-                <input type="hidden" name="p3" value="1">
-                <input type="hidden" name="rm" value="2">
-                <input type="hidden" name="src" value="1">
-                <input type="hidden" name="sra" value="1">
-                <input type="hidden" name="no_shipping" value="0">
-                <input type="hidden" name="no_note" value="1">
-                <input type="hidden" name="lc" value="US">
-                <input type="hidden" name="bn" value="PP-DonationsBF">
-                <input type="hidden" name="return" value="http://www.yoursite.com/thankyou.html">
-                <input type="hidden" name="cancel_return" value="http://www.yoursite.com/paymentcancel.html">
-                <input type="hidden" name="notify_url" value="http://www.yoursite.com/notifypayment.php">
-                <input type="submit" name="submit">
-              </form>
-              <!-- ===== END: Paypal Both Onetime/Recurring Form ===== -->
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
-              <img class="img-fullwidth mt-sm-40" src="{{ asset('fronend/images/about/1.png') }}" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> --}}
-
-    <!-- Section: Upcoming Events -->
-    <section class="bg-light">
-        <div class="container">
-            <div class="section-content">
-                <div class="row">
-                    <div class="col-md-8 col-lg-6 col-xl-6">
-                        <h3 class="text-uppercase title line-bottom mt-0 mb-30"><i
-                                class="fa fa-thumb-tack text-gray-darkgray mr-10"></i>
-                            @if (session()->get('language') == 'bangla')
-                                দান/সহযোগীতা করুন
-                            @elseif (session()->get('language') == 'arabic')
-                                حملة التبرع
-                            @else
-                                Donation Campaign
-                            @endif
-                            </span>
-                        </h3>
-                        <div class="owl-carousel-2col">
-                            @foreach ($donations as $donation)
-                                <div class="item bg-white custom_card"
-                                    style="height: 500px; margin: 20px; border-radius: 20px;">
-                                    <div class="campaign maxwidth500 mb-30">
-                                        <div class="thumb"
-                                            style="height: 220px; border-top-right-radius: 20px; border-top-left-radius: 20px;">
-                                            <img src="{{ asset($donation->image) }}" alt="" class="img-fullwidth">
-                                            <div class="campaign-overlay"></div>
-                                        </div>
-                                        <div class="campaign-details clearfix p-15 pt-10 pb-10" style="height:250px">
-                                            <h4 class="font-weight-700 mt-0"><a href="#"></a>
-                                                @if (session()->get('language') == 'bangla')
-                                                    {{ $donation->bangla_title }}
-                                                @elseif (session()->get('language') == 'arabic')
-                                                    {{ $donation->arabic_title }}
-                                                @else
-                                                    {{ $donation->title }}
-                                                @endif
-                                            </h4>
-                                            <div style="width:100%;height:130px; overflow-y: scroll;">
-                                                <p>
-                                                    @if (session()->get('language') == 'bangla')
-                                                        {!! $donation->short_des_bangla1 !!}
-                                                    @elseif (session()->get('language') == 'arabic')
-                                                        {!! $donation->short_des_ab1 !!}
-                                                    @else
-                                                        {!! $donation->short_des1 !!}
-                                                    @endif
-                                                </p>
-                                            </div>
-                                            <div class="campaign-bottom clearfix mt-20 mb-10"
-                                                style="text-align: center">
-                                                <a class="btn_custom"
-                                                    href="{{ route('donation', $donation->id) }}">
-                                                    @if (session()->get('language') == 'bangla')
-                                                        দান করুন
-                                                    @elseif (session()->get('language') == 'arabic')
-                                                        تبرع الآن
-                                                    @else
-                                                        Donate Now
-                                                    @endif
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-lg-6 col-xl-6">
-                        <h3 class="text-uppercase title line-bottom mt-0 mb-30"><i
-                                class="fa fa-calendar text-gray-darkgray mr-10"></i>
-                            @if (session()->get('language') == 'bangla')
-                                আসন্ন প্রকল্প
-                            @elseif (session()->get('language') == 'arabic')
-                                المشاريع القادمة
-                            @else
-                                Upcoming Projects
-                            @endif
-                            </span>
-                        </h3>
-
-                        @foreach ($upcomingProjects as $item)
-                            <article class="post media-post clearfix pb-0 mb-15">
-                                <div class="event-date-time pull-left flip bg-theme-colored text-center mt-5 p-15 pt-10">
-                                    <h4 class="text-white font-weight-600 font-28 mt-0 mb-0">22</h4>
-                                    <span class="text-white">Sep</span>
-                                </div>
-                                <div class="post-right upcoming-event-right">
-                                    <h4 class="mt-0 mb-5"><a
-                                            href="{{ route('upcoming.project.details', $item->id) }}">{{ $item->title }}</a>
-                                    </h4>
-                                    <ul class="list-inline font-12 mb-5">
-                                        <li class="pr-0"><i class="fa fa-clock-o mr-5"></i> At 6.30 pm |</li>
-                                        <li class="pl-5"><i class="fa fa-map-marker mr-5"></i>{{ $item->location }}</li>
-                                    </ul>
-                                    <p class="mb-0 font-13">{!! $item->short_des1 !!}</p>
-                                </div>
-                            </article>
-                        @endforeach
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   
 
     <!-- Divider: Funfact -->
 
     <!-- Divider: Counters start-->
-    <section class="divider parallax layer-overlay overlay-dark-4" data-bg-img="{{ asset('frontend/images/bg/bg2.jpg') }}"
+    <section class="divider parallax layer-overlay overlay-dark-4 pt-45 pb-45" data-bg-img="{{ asset('frontend/images/bg/bg2.jpg') }}"
         data-parallax-ratio="0.7">
-        <div class="container pt-90 pb-90">
+        <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
+                <div class="col-xs-6 col-sm-6 col-md-3 mb-xs-20">
                     <div class="funfact text-center">
                         <i class="{{ $counter->incon_1 }} mt-5 text-white"></i>
                         <h2 data-animation-duration="2000" data-value="{{ $counter->value_1 }}"
@@ -702,7 +336,7 @@
                         </h5>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
+                <div class="col-xs-6 col-sm-6 col-md-3 mb-xs-20">
                     <div class="funfact text-center">
                         <i class="{{ $counter->incon_2 }} mt-5 text-white"></i>
                         <h2 data-animation-duration="2000" data-value="{{ $counter->value_2 }}"
@@ -718,7 +352,7 @@
                         </h5>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
+                <div class="col-xs-6 col-sm-6 col-md-3 mb-xs-20">
                     <div class="funfact text-center">
                         <i class="{{ $counter->incon_3 }} mt-5 text-white"></i>
                         <h2 data-animation-duration="2000" data-value="{{ $counter->value_3 }}"
@@ -734,7 +368,7 @@
                         </h5>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 mb-md-50">
+                <div class="col-xs-6 col-sm-6 col-md-3 mb-xs-20">
                     <div class="funfact text-center">
                         <i class="{{ $counter->incon_4 }} mt-5 text-white"></i>
                         <h2 data-animation-duration="2000" data-value="{{ $counter->value_4 }}"
@@ -884,19 +518,10 @@
       </div>
     </section> --}}
 
-    <!-- Divider: Donors -->
+    <!-- Section: FAQ Accordion (Inspired by nlquran.net) -->
+    @include('frontend.faq.faq_section')
+  <!-- Divider: Donors -->
     @include('frontend.partners.partners')
     <!-- Divider: Donors -->
+  
 @endsection
-@push('frontend_script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elem = document.querySelector('.grid');
-            var msnry = new Masonry(elem, {
-                itemSelector: '.grid-item',
-                columnWidth: '.grid-item',
-                percentPosition: true
-            });
-        });
-    </script>
-@endpush
