@@ -310,6 +310,17 @@
                 @if($isBn) ভর্তি নির্দেশিকা @elseif($isAb) دليل القبول @else Admission Guidelines @endif
             </li>
         </ul>
+        <div class="mt-4 d-flex justify-content-center flex-wrap gap-2">
+            <a href="{{ route('online.admission') }}" class="btn btn-warning fw-bold px-4 py-2 shadow" style="border-radius: 25px;">
+                <i class="fa fa-pencil-square-o me-1"></i> @if($isBn) অনলাইনে ভর্তি আবেদন করুন @elseif($isAb) تقديم طلب القبول @else Apply Online @endif
+            </a>
+            <a href="{{ route('admission.offline.form') }}" target="_blank" class="btn btn-outline-light fw-bold px-4 py-2 shadow" style="border-radius: 25px;">
+                <i class="fa fa-print me-1"></i> @if($isBn) অফলাইন ৫ পৃষ্ঠার ফরম প্রিন্ট @elseif($isAb) تحميل استمارة القبول @else Offline Blank Form @endif
+            </a>
+            <a href="{{ route('admission.status') }}" class="btn btn-light fw-bold px-4 py-2 shadow text-success" style="border-radius: 25px;">
+                <i class="fa fa-search me-1"></i> @if($isBn) আবেদন ট্র্যাকিং @elseif($isAb) متابعة الطلب @else Track Status @endif
+            </a>
+        </div>
     </div>
 </section>
 
@@ -342,6 +353,12 @@
             </ul>
 
             <div class="admission-action-btns">
+                <a href="{{ route('online.admission') }}" class="btn-print" style="background: #198754; text-decoration: none;">
+                    <i class="fa fa-pencil-square-o me-1"></i> @if($isBn) অনলাইনে আবেদন @elseif($isAb) تقديم طلب @else Apply Online @endif
+                </a>
+                <a href="{{ route('admission.offline.form') }}" target="_blank" class="btn-print" style="background: #6c757d; text-decoration: none;">
+                    <i class="fa fa-file-pdf-o me-1"></i> @if($isBn) অফলাইন ফরম @elseif($isAb) الاستمارة @else Offline Form @endif
+                </a>
                 <button type="button" class="btn-print" onclick="window.print()">
                     <i class="fa fa-print me-1"></i> @if($isBn) প্রিন্ট করুন @elseif($isAb) طباعة @else Print @endif
                 </button>

@@ -9,9 +9,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     @php $logo = \App\Models\Logo::latest()->first() @endphp
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset($logo->favicon ?? null) }}">
-
-    @php $logo = \App\Models\Logo::latest()->first() @endphp
+    @if($logo && $logo->favicon)
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset($logo->favicon) }}">
+        <link rel="icon" type="image/png" href="{{ asset($logo->favicon) }}">
+        <link rel="apple-touch-icon" href="{{ asset($logo->favicon) }}">
+    @endif
     <title>{{ $logo->site_name ?? null }}</title>
 
     <meta name="description" content="" />
@@ -182,7 +184,10 @@
     <!-- end wrapper -->
 
 
-    @include('frontend.includes.script')
+        <!-- Floating WhatsApp & Quick Actions -->
+        @include('frontend.includes.floating_contact')
+
+        @include('frontend.includes.script')
 
 
 
