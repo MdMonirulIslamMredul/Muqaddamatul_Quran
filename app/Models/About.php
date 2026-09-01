@@ -46,6 +46,14 @@ class About extends Model
         self::$data->hifz_edu_details_bn = $request->hifz_edu_details_bn;
         self::$data->hifz_edu_details_ab = $request->hifz_edu_details_ab;
 
+        self::$data->achievement = $request->achievement;
+        self::$data->achievement_bn = $request->achievement_bn;
+        self::$data->achievement_ab = $request->achievement_ab;
+
+        self::$data->int_achievement = $request->int_achievement;
+        self::$data->int_achievement_bn = $request->int_achievement_bn;
+        self::$data->int_achievement_ab = $request->int_achievement_ab;
+
         self::$data->save();
         return self::$data;
     }
@@ -76,6 +84,14 @@ class About extends Model
         self::$data->hifz_edu_details = $request->hifz_edu_details;
         self::$data->hifz_edu_details_bn = $request->hifz_edu_details_bn;
         self::$data->hifz_edu_details_ab = $request->hifz_edu_details_ab;
+
+        self::$data->achievement = $request->achievement;
+        self::$data->achievement_bn = $request->achievement_bn;
+        self::$data->achievement_ab = $request->achievement_ab;
+
+        self::$data->int_achievement = $request->int_achievement;
+        self::$data->int_achievement_bn = $request->int_achievement_bn;
+        self::$data->int_achievement_ab = $request->int_achievement_ab;
 
         if ($request->file('image1')) {
             if (self::$data->image1 && file_exists(self::$data->image1)) {
