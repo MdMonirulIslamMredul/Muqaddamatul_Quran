@@ -21,8 +21,8 @@
                     <!-- Background Image with Ken Burns / Zoom Animation -->
                     <div class="hero-bg-img" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('{{ asset($banner->image) }}') no-repeat center right; background-size: cover; z-index: 0;"></div>
 
-                    <!-- Deep Emerald / Forest Green Gradient Overlay -->
-                    <div class="hero-gradient-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #071f14 0%, rgba(7, 31, 20, 0.96) 35%, rgba(11, 46, 29, 0.85) 55%, rgba(11, 46, 29, 0.45) 75%, rgba(5, 20, 13, 0.65) 100%); z-index: 1;"></div>
+                    <!-- Clean & Soft Gradient Overlay (Decreased opacity so background photo is vivid & visible) -->
+                    <div class="hero-gradient-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(5, 20, 13, 0.82) 0%, rgba(5, 20, 13, 0.68) 32%, rgba(5, 20, 13, 0.32) 58%, rgba(5, 20, 13, 0.08) 80%, rgba(5, 20, 13, 0.15) 100%); z-index: 1;"></div>
 
                     <!-- Slide Content with Staggered Entrance Animations -->
                     <div class="container" style="position: relative; z-index: 2; height: 100%; min-height: 560px; display: flex; align-items: center;">
@@ -32,13 +32,13 @@
                                 
                                 <!-- Main Title -->
                                 <h1 class="hero-title text-white font-weight-800 hero-anim-item anim-title" 
-                                    style="font-size: 42px; line-height: 1.3; margin-top: 0; margin-bottom: 18px; font-family: 'SolaimanLipi', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif; text-shadow: 0 2px 10px rgba(0,0,0,0.35);">
+                                    style="font-size: 42px; line-height: 1.3; margin-top: 0; margin-bottom: 18px; font-family: 'SolaimanLipi', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif; text-shadow: 0 2px 14px rgba(0,0,0,0.7);">
                                     {{ $banner->localized_title }}
                                 </h1>
 
                                 <!-- Description Paragraph -->
                                 <p class="hero-description text-white hero-anim-item anim-desc" 
-                                   style="font-size: 15px; line-height: 1.8; color: #f3f4f6; max-width: 640px; margin-bottom: 26px; text-shadow: 0 1px 6px rgba(0,0,0,0.4); opacity: 0.95;">
+                                   style="font-size: 15px; line-height: 1.8; color: #ffffff; max-width: 640px; margin-bottom: 26px; text-shadow: 0 1px 8px rgba(0,0,0,0.7); opacity: 0.98;">
                                     {{ $banner->localized_details }}
                                 </p>
 
@@ -271,6 +271,9 @@
 
 /* ================= RESPONSIVE ADJUSTMENTS ================= */
 @media (max-width: 768px) {
+    .hero-gradient-overlay {
+        background: linear-gradient(180deg, rgba(5, 20, 13, 0.82) 0%, rgba(5, 20, 13, 0.65) 55%, rgba(5, 20, 13, 0.85) 100%) !important;
+    }
     .carousel-fade .carousel-inner,
     .carousel-fade .carousel-inner .item {
         height: auto !important;
