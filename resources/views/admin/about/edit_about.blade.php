@@ -135,9 +135,49 @@
                             </div>
                         </div>
 
-                        {{-- Section 6: Image Uploads with Live & Existing Preview --}}
+                        {{-- Section 6: Institutional Achievements (Multi-language) --}}
                         <div class="border-bottom pb-2 mb-3">
-                            <h5 class="fw-bold text-dark mb-1"><i class="fa fa-images text-primary me-2"></i>6. Media & Images (with Live Preview)</h5>
+                            <h5 class="fw-bold mb-1" style="color: #ea580c !important;"><i class="fa fa-trophy me-2"></i>6. মুক্বাদ্দামাতুল কুরআন হিফয মাদরাসার সফলতা (Institutional Achievements)</h5>
+                            <small class="text-muted">Multi-language institutional achievements & milestones (English, Bangla, Arabic)</small>
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold text-primary"><i class="fa fa-globe me-1"></i> Achievements (English)</label>
+                                <textarea class="form-control rich-editor" rows="5" name="achievement" placeholder="Describe institutional achievements in English...">{!! $about->achievement !!}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold text-success"><i class="fa fa-language me-1"></i> Achievements (Bangla - বাংলা)</label>
+                                <textarea class="form-control rich-editor" rows="5" name="achievement_bn" placeholder="বাংলায় সাফল্য ও অর্জনসমূহ বিস্তারিত...">{!! $about->achievement_bn !!}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold text-secondary"><i class="fa fa-book-open me-1"></i> Achievements (Arabic - العربية)</label>
+                                <textarea class="form-control rich-editor" dir="rtl" rows="5" name="achievement_ab" placeholder="الإنجازات والنجاحات بالعربية...">{!! $about->achievement_ab !!}</textarea>
+                            </div>
+                        </div>
+
+                        {{-- Section 7: International Achievements (Multi-language) --}}
+                        <div class="border-bottom pb-2 mb-3">
+                            <h5 class="fw-bold mb-1" style="color: #0b462c !important;"><i class="fa fa-globe me-2"></i>7. আন্তর্জাতিক হিফযুল কুরআন প্রতিযোগিতা (International Achievements)</h5>
+                            <small class="text-muted">Multi-language international achievements & competitions (English, Bangla, Arabic)</small>
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold text-primary"><i class="fa fa-globe me-1"></i> Int. Achievements (English)</label>
+                                <textarea class="form-control rich-editor" rows="5" name="int_achievement" placeholder="Describe international achievements in English...">{!! $about->int_achievement !!}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold text-success"><i class="fa fa-language me-1"></i> Int. Achievements (Bangla - বাংলা)</label>
+                                <textarea class="form-control rich-editor" rows="5" name="int_achievement_bn" placeholder="বাংলায় আন্তর্জাতিক সাফল্য ও অর্জনসমূহ...">{!! $about->int_achievement_bn !!}</textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold text-secondary"><i class="fa fa-book-open me-1"></i> Int. Achievements (Arabic - العربية)</label>
+                                <textarea class="form-control rich-editor" dir="rtl" rows="5" name="int_achievement_ab" placeholder="الإنجازات الدولية والمسابقات بالعربية...">{!! $about->int_achievement_ab !!}</textarea>
+                            </div>
+                        </div>
+
+                        {{-- Section 8: Image Uploads with Live & Existing Preview --}}
+                        <div class="border-bottom pb-2 mb-3">
+                            <h5 class="fw-bold text-dark mb-1"><i class="fa fa-images text-primary me-2"></i>8. Media & Images (with Live Preview)</h5>
                             <small class="text-muted">Upload new images to replace existing ones. Preview updates automatically.</small>
                         </div>
                         <div class="row g-4 mb-4">

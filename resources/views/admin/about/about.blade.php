@@ -174,11 +174,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Hifz Education Details (Multi-language) --}}
+                                    </div>                            {{-- Hifz Education Details (Multi-language) --}}
                             <div class="col-12">
                                 <div class="card border shadow-sm" style="border-left: 4px solid #17a2b8 !important;">
                                     <div class="card-header bg-white py-2 border-bottom">
@@ -202,6 +198,68 @@
                                                 <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
                                                 <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->hifz_edu_details_ab ?? '<em>Not specified</em>' !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Achievements (Multi-language) --}}
+                            <div class="col-12">
+                                <div class="card border shadow-sm" style="border-left: 4px solid #ea580c !important;">
+                                    <div class="card-header bg-white py-2 border-bottom">
+                                        <h6 class="fw-bold mb-0" style="color: #ea580c;"><i class="fa fa-trophy me-2"></i> মুক্বাদ্দামাতুল কুরআন হিফয মাদরাসার সফলতা (Institutional Achievements)</h6>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <span class="badge mb-2" style="background-color: #007bff; color: #ffffff;">English</span>
+                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                    {!! $about->achievement ?? '<em>Not specified</em>' !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="badge mb-2" style="background-color: #28a745; color: #ffffff;">Bangla (বাংলা)</span>
+                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                    {!! $about->achievement_bn ?? '<em>Not specified</em>' !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
+                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                    {!! $about->achievement_ab ?? '<em>Not specified</em>' !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- International Achievements (Multi-language) --}}
+                            <div class="col-12">
+                                <div class="card border shadow-sm" style="border-left: 4px solid #0b462c !important;">
+                                    <div class="card-header bg-white py-2 border-bottom">
+                                        <h6 class="fw-bold mb-0" style="color: #0b462c;"><i class="fa fa-globe me-2"></i> আন্তর্জাতিক হিফযুল কুরআন প্রতিযোগিতা (International Achievements)</h6>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <span class="badge mb-2" style="background-color: #007bff; color: #ffffff;">English</span>
+                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                    {!! $about->int_achievement ?? '<em>Not specified</em>' !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="badge mb-2" style="background-color: #28a745; color: #ffffff;">Bangla (বাংলা)</span>
+                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                    {!! $about->int_achievement_bn ?? '<em>Not specified</em>' !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
+                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                    {!! $about->int_achievement_ab ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -253,7 +311,13 @@
                                                     <span class="badge me-1" style="background-color: #28a745; color: #ffffff; padding: 5px 8px; font-size: 11px;"><i class="fa fa-check me-1"></i> Features (EN/BN/AB)</span>
                                                 @endif
                                                 @if($about->hifz_edu_details || $about->hifz_edu_details_bn || $about->hifz_edu_details_ab)
-                                                    <span class="badge" style="background-color: #17a2b8; color: #ffffff; padding: 5px 8px; font-size: 11px;"><i class="fa fa-book me-1"></i> Hifz Details (EN/BN/AB)</span>
+                                                    <span class="badge me-1" style="background-color: #17a2b8; color: #ffffff; padding: 5px 8px; font-size: 11px;"><i class="fa fa-book me-1"></i> Hifz Details (EN/BN/AB)</span>
+                                                @endif
+                                                @if($about->achievement || $about->achievement_bn || $about->achievement_ab)
+                                                    <span class="badge me-1" style="background-color: #fd7e14; color: #ffffff; padding: 5px 8px; font-size: 11px;"><i class="fa fa-trophy me-1"></i> Achievements (EN/BN/AB)</span>
+                                                @endif
+                                                @if($about->int_achievement || $about->int_achievement_bn || $about->int_achievement_ab)
+                                                    <span class="badge" style="background-color: #6f42c1; color: #ffffff; padding: 5px 8px; font-size: 11px;"><i class="fa fa-globe me-1"></i> Int. Achievements (EN/BN/AB)</span>
                                                 @endif
                                             </div>
                                         </td>
@@ -363,7 +427,39 @@
                                 </div>
                             </div>
 
-                            <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">6. Images</h5>
+                            <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">6. Institutional Achievements (সাফল্য ও অর্জনসমূহ)</h5>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold text-primary"><i class="fa fa-trophy me-1"></i> Achievements (English)</label>
+                                    <textarea class="form-control rich-editor" rows="4" name="achievement" placeholder="Achievements in English..."></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold text-success"><i class="fa fa-trophy me-1"></i> Achievements (Bangla - বাংলা)</label>
+                                    <textarea class="form-control rich-editor" rows="4" name="achievement_bn" placeholder="বাংলায় সাফল্য ও অর্জনসমূহ..."></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold text-secondary"><i class="fa fa-trophy me-1"></i> Achievements (Arabic - العربية)</label>
+                                    <textarea class="form-control rich-editor" rows="4" name="achievement_ab" placeholder="الإنجازات بالعربية..."></textarea>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">7. International Achievements (আন্তর্জাতিক সাফল্য ও অর্জনসমূহ)</h5>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold text-primary"><i class="fa fa-globe me-1"></i> Int. Achievements (English)</label>
+                                    <textarea class="form-control rich-editor" rows="4" name="int_achievement" placeholder="International achievements in English..."></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold text-success"><i class="fa fa-globe me-1"></i> Int. Achievements (Bangla - বাংলা)</label>
+                                    <textarea class="form-control rich-editor" rows="4" name="int_achievement_bn" placeholder="বাংলায় আন্তর্জাতিক সাফল্য ও অর্জনসমূহ..."></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold text-secondary"><i class="fa fa-globe me-1"></i> Int. Achievements (Arabic - العربية)</label>
+                                    <textarea class="form-control rich-editor" rows="4" name="int_achievement_ab" placeholder="الإنجازات الدولية بالعربية..."></textarea>
+                                </div>
+                            </div>
+
+                            <h5 class="fw-bold text-dark border-bottom pb-2 mb-3">8. Images</h5>
                             <div class="row g-3 mb-4">
                                 <div class="col-md-4">
                                     <label class="form-label fw-semibold">About Image 1</label>
