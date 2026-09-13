@@ -8,20 +8,35 @@ use Illuminate\Database\Eloquent\Model;
 class Gallery extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'add_home',
+        'status',
+    ];
+
     public static $data,$image,$imageName,$directory,$imageUrl;
 
     public static function save_gallery($request)
     {
         self::$data = new Gallery();
-        self::$data->add_home = $request->add_home??null;
-        self::$data->image = self::saveImage($request);
+        self::$data->title = $request->title ?? null;
+        self::$data->description = $request->description ?? null;
+        self::$data->add_home = $request->add_home ?? null;
+        if ($request->hasFile('image')) {
+            self::$data->image = self::saveImage($request);
+        }
         self::$data->save();
     }
     public static function update_gallery($request)
     {
         self::$data = Gallery::find($request->id);
-        self::$data->add_home = $request->add_home??null;
-        self::$data->status = $request->status??null;
+        self::$data->title = $request->title ?? null;
+        self::$data->description = $request->description ?? null;
+        self::$data->add_home = $request->add_home ?? null;
+        self::$data->status = $request->status ?? null;
         if($request->file('image')){
             if(self::$data->image){
                 if(file_exists(self::$data->image)){
