@@ -1,62 +1,62 @@
 <header id="header" class="header">
-    <div class="header-top bg-black-333 sm-text-center border-top-theme-color-3px p-0">
+    <div class="header-top border-top-theme-color-3px p-0" style="background: #185110ff; border-top: 3px solid #1b4332;">
       <div class="container">
         @php
           $links = App\Models\WebsiteLinks::latest()->first();
-          $logo = \App\Models\Logo::latest()->first()
+          $logo = \App\Models\Logo::latest()->first();
         @endphp
 
-        <div class="row">
-          <div class="col-md-5">
-            <div class="widget no-border m-0">
-              <ul class="list-inline xs-text-center text-white mt-5">
-                <li class="m-0 pl-10 pr-10"> <a href="#" class="text-white"><i class="fa fa-phone text-theme-colored"></i> {{ $links->number }}</a></li>
-                <li class="m-0 pl-10 pr-10">
-                  <a href="#" class="text-white"><i class="fa fa-envelope-o text-theme-colored"></i> {{ $links->email }}</a>
-                </li>
+        <div class="header-top-wrapper" style="display: flex; justify-content: space-between; align-items: center; min-height: 42px; padding: 4px 0; flex-wrap: nowrap; gap: 12px;">
+          
+          <!-- Left: Contact Information -->
+          <div class="header-top-left" style="display: flex; align-items: center; gap: 15px; white-space: nowrap; flex-shrink: 0;">
+            @if($links && $links->number)
+              <a href="tel:{{ $links->number }}" class="text-white text-decoration-none" style="color: #eaeaea; font-size: 12px; display: inline-flex; align-items: center; gap: 6px; margin-right: 6px;">
+                <i class="fa fa-phone text-theme-colored" style="color: #2ec4b6;"></i> <span>{{ $links->number }}</span>
+              </a>
+            @endif
+            @if($links && $links->email)
+              <a href="mailto:{{ $links->email }}" class="text-white text-decoration-none hidden-xs" style="color: #eaeaea; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa fa-envelope-o text-theme-colored" style="color: #2ec4b6;"></i> <span>{{ $links->email }}</span>
+              </a>
+            @endif
+          </div>
+
+          <!-- Middle: Social Icons -->
+          @if($links)
+            <div class="header-top-middle hidden-xs hidden-sm" style="display: flex; align-items: center;">
+              <ul class="styled-icons icon-dark icon-flat icon-sm m-0 p-0" style="display: flex; gap: 6px; list-style: none; margin: 0; padding: 0;">
+                @if($links->facebook)
+                  <li style="margin: 0;"><a href="{{ $links->facebook }}" target="_blank" style="width: 26px; height: 26px; line-height: 26px; font-size: 12px; background: rgba(255,255,255,0.1); color: #fff; border-radius: 4px; display: inline-block; text-align: center;"><i class="fa fa-facebook"></i></a></li>
+                @endif
+                @if($links->linkedIn)
+                  <li style="margin: 0;"><a href="{{ $links->linkedIn }}" target="_blank" title="Zoom" style="width: 26px; height: 26px; line-height: 26px; font-size: 12px; background: rgba(255,255,255,0.1); color: #fff; border-radius: 4px; display: inline-block; text-align: center;" onmouseover="this.style.background='#2D8CFF'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="fa fa-video-camera"></i></a></li>
+                @endif
+                @if($links->youtube)
+                  <li style="margin: 0;"><a href="{{ $links->youtube }}" target="_blank" style="width: 26px; height: 26px; line-height: 26px; font-size: 12px; background: rgba(255,255,255,0.1); color: #fff; border-radius: 4px; display: inline-block; text-align: center;"><i class="fa fa-youtube"></i></a></li>
+                @endif
+                @if($links->instagram)
+                  <li style="margin: 0;"><a href="{{ $links->instagram }}" target="_blank" style="width: 26px; height: 26px; line-height: 26px; font-size: 12px; background: rgba(255,255,255,0.1); color: #fff; border-radius: 4px; display: inline-block; text-align: center;"><i class="fa fa-instagram"></i></a></li>
+                @endif
               </ul>
             </div>
-          </div>
-          <div class="col-md-3 pr-0">
-            <div class="widget no-border m-0">
-              {{-- <ul class="styled-icons icon-dark icon-flat icon-sm pull-right flip sm-pull-none sm-text-center mt-sm-15">
-                <li><a href="#"><i class="fa fa-facebook text-white"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter text-white"></i></a></li>
-                <li><a href="#"><i class="fa fa-google-plus text-white"></i></a></li>
-                <li><a href="#"><i class="fa fa-instagram text-white"></i></a></li>
-                <li><a href="#"><i class="fa fa-linkedin text-white"></i></a></li>
-              </ul> --}}
-              <ul class="styled-icons icon-dark icon-flat icon-sm pull-right flip sm-pull-none sm-text-center mt-sm-15">
-                <li><a href="{{ $links->facebook }}"><i class="fa fa-facebook"></i></a></li>
-                {{-- <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-skype"></i></a></li> --}}
-                <li><a href="{{ $links->linkedIn }}"><i class="fa fa-linkedin"></i></a></li>
-                <li><a href="{{ $links->youtube }}"><i class="fa fa-youtube"></i></a></li>
-                <li><a href="{{ $links->instagram }}"><i class="fa fa-instagram"></i></a></li>
-                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="d-flex flex-row">
-              <a class="btn btn-colored btn-flat btn-theme-colored pb-10" href="{{ route('all.donation') }}">@if(session()->get('language')=='bangla') দান করুন @elseif (session()->get('language')=='arabic') هبة @else Donation @endif </a>
-              <a class="text-white" href="{{ route('english.language')}}"><span class="text-danger">LN:</span> English |</a>
-              <a class="text-white" href="{{ route('bangla.language')}}">বাংলা |</a>
-              <a class="text-white" href="{{ route('arabic.language')}}">عربي</a>
+          @endif
+
+          <!-- Right: Buttons & Languages -->
+          <div class="header-top-right" style="display: flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0;">
+            
+            <a class="btn btn-sm btn-flat text-white" href="{{ route('online_program.admission') }}" style="background-color: #1b4332; color: #ffffff !important; padding: 4px 10px; font-size: 12px; border-radius: 4px; font-weight: bold; line-height: 1.4; border: 1px solid #2d6a4f; margin-left: 6px;">
+              <i class="fa fa-pencil-square-o me-1"></i> @if(session()->get('language')=='bangla') ভর্তি আবেদন @elseif (session()->get('language')=='arabic') القبول عبر الإنترنت @else Admissions @endif
+            </a>
+            <div class="lang-switcher" style="font-size: 12px; margin-left: 6px; color: #ffffff;">
+              <a href="{{ route('english.language')}}" style="color: {{ session()->get('language') == 'english' ? '#38ef7d' : '#eaeaea' }}; font-weight: bold; text-decoration: none;">EN</a>
+              <span style="color: #555; margin: 0 2px;">|</span>
+              <a href="{{ route('bangla.language')}}" style="color: {{ session()->get('language') == 'bangla' || !session()->has('language') ? '#38ef7d' : '#eaeaea' }}; font-weight: bold; text-decoration: none;">বাংলা</a>
+              <span style="color: #555; margin: 0 2px;">|</span>
+              <a href="{{ route('arabic.language')}}" style="color: {{ session()->get('language') == 'arabic' ? '#38ef7d' : '#eaeaea' }}; font-weight: bold; text-decoration: none;">عربي</a>
             </div>
           </div>
 
-          {{-- <li><a href="#">@if(session()->get('language') == 'bangla') ভাষা:বাংলা @else Lan:Eng @endif </a>
-            <ul class="dropdown">
-              @if(session()->get('language') == 'bangla')
-              <li><a href="{{ route('english.language')}}">English</a>
-              </li>
-              @else
-              <li><a href="{{ route('bangla.language')}}">বাংলা</a>
-              </li>
-              @endif
-            </ul>
-          </li> --}}
         </div>
       </div>
     </div>
@@ -82,24 +82,29 @@
               <li class="{{ Request()->is('/')? 'active':'' }}"><a href="{{ url('/') }}">@if(session()->get('language')=='bangla') হোম @elseif (session()->get('language')=='arabic') بيت @else Home @endif</a>
 
               </li>
-              <li class="{{ Request()->is('about_menu')? 'active':'' }}"><a href="{{route('about.menu')}}">@if(session()->get('language')=='bangla') আমাদের সম্পর্কে @elseif (session()->get('language')=='arabic') معلومات عنا @else About Us @endif</a>
+              <li class="{{ Request()->is('about_menu*') || Request()->is('teachers*') ? 'active':'' }}">
+                <a href="{{route('about.menu')}}">@if(session()->get('language')=='bangla') আমাদের সম্পর্কে @elseif (session()->get('language')=='arabic') معلومات عنا @else About Us @endif</a>
+                <ul class="dropdown">
+                  <li class="text-left"><a href="{{ route('about.menu') }}">@if(session()->get('language')=='bangla') পরিচিতি ও লক্ষ্য @elseif (session()->get('language')=='arabic') نبذة عن المعهد @else About Overview @endif</a></li>
+                  <li class="text-left"><a href="{{ route('frontend.teachers.index') }}">@if(session()->get('language')=='bangla') <i class="fa fa-graduation-cap me-1"></i> আমাদের শিক্ষকবৃন্দ @elseif (session()->get('language')=='arabic') الهيئة التعليمية @else Our Teachers @endif</a></li>
+                </ul>
               </li>
               @php
                 $categories = App\Models\Category::get();
               @endphp
-              <li><a href="#">@if(session()->get('language') == 'bangla') সেবা @elseif (session()->get('language')=='arabic') خدمة @else Service @endif </a>
+              {{-- <li><a href="#">@if(session()->get('language') == 'bangla') সেবা @elseif (session()->get('language')=='arabic') خدمة @else Service @endif </a>
                 <ul class="dropdown">
                   <li class="text-left"><a href="{{ route('audio.page')}}">@if(session()->get('language')=='bangla') অডিও @elseif (session()->get('language')=='arabic') صوتي @else Audio @endif </a>
                   </li>
-                  <li class="text-left"><a href="{{ route('book.page')}}">@if(session()->get('language')=='bangla') বুক @elseif (session()->get('language')=='arabic') كتاب @else Book @endif </a>
+                  <li class="text-left"><a href="{{ route('book.page')}}">@if(session()->get('language')=='bangla') বই @elseif (session()->get('language')=='arabic') كتاب @else Book @endif </a>
                   </li>
                   <li class="text-left"><a href="{{ route('tv.page')}}">@if(session()->get('language')=='bangla') সরাসরি সম্প্রচার @elseif (session()->get('language')=='arabic') البث التلفزيوني المباشر @else Live Tv @endif </a>
                   </li>
                 </ul>
-              </li>
+              </li> --}}
 
               {{-- department --}}
-              <li><a href="#">@if(session()->get('language') == 'bangla') ডিপার্টমেন্ট  @else Department @endif </a>
+              {{-- <li><a href="#">@if(session()->get('language') == 'bangla') ডিপার্টমেন্ট  @else Department @endif </a>
 
                  <ul class="dropdown">
                     @foreach ($departments as $department)
@@ -108,29 +113,95 @@
                     </li>
                     @endforeach
                   </ul>
+              </li> --}}
+
+              {{-- Offline Program --}}
+              <li class="{{ Request()->is('admission*') || Request()->is('online-admission*') || Request()->is('offline-admission*') || Request()->is('offline-syllabus*') || Request()->is('online-program/offline-syllabus*') ? 'active' : '' }}">
+                <a href="#">
+                  @if(session()->get('language') == 'bangla') অফলাইন প্রোগ্রাম @elseif (session()->get('language') == 'arabic') البرنامج الحضوري @else Offline Program @endif
+                </a>
+                <ul class="dropdown">
+                  <li class="text-left">
+                    <a href="{{ route('admission.guidelines') }}">
+                      <i class="fa fa-book me-1"></i> @if(session()->get('language') == 'bangla') ভর্তি নির্দেশিকা @elseif (session()->get('language') == 'arabic') شروط القبول @else Guidelines & Fees @endif
+                    </a>
+                  </li>
+                  <li class="text-left">
+                    <a href="{{ route('online_program.offline_syllabus') }}">
+                      <i class="fa fa-file-text-o me-1"></i> @if(session()->get('language') == 'bangla') অফলাইন সিলেবাস @elseif (session()->get('language') == 'arabic') المنهج الدراسي @else Offline Syllabus @endif
+                    </a>
+                  </li>
+                  <li class="text-left">
+                    <a href="{{ route('online.admission') }}">
+                      <i class="fa fa-pencil-square-o me-1"></i> @if(session()->get('language') == 'bangla') অনলাইন ভর্তি ফরম @elseif (session()->get('language') == 'arabic') تقديم طلب القبول @else Apply Online @endif
+                    </a>
+                  </li>
+                  <li class="text-left">
+                    <a href="{{ route('admission.offline.form') }}" target="_blank">
+                      <i class="fa fa-print me-1"></i> @if(session()->get('language') == 'bangla') অফলাইন ফরম ডাউনলোড @elseif (session()->get('language') == 'arabic') تحميل الاستمارة @else Offline Blank Form @endif
+                    </a>
+                  </li>
+                  <li class="text-left">
+                    <a href="{{ route('admission.status') }}">
+                      <i class="fa fa-search me-1"></i> @if(session()->get('language') == 'bangla') আবেদন ট্র্যাকিং @elseif (session()->get('language') == 'arabic') متابعة الطلب @else Track Application @endif
+                    </a>
+                  </li>
+                </ul>
               </li>
 
-              <li class="{{ Request()->is('admission-guidelines*') ? 'active' : '' }}">
-                <a href="{{ route('admission.guidelines') }}">
-                  @if(session()->get('language') == 'bangla') ভর্তি নির্দেশিকা @elseif (session()->get('language') == 'arabic') شروط القبول @else Admission @endif
+              {{-- <li class="{{ Request()->is('all_activism')? 'active':'' }}"><a href="{{ route('all.activism') }}">@if(session()->get('language')=='bangla') আমাদের কার্যক্রম @elseif (session()->get('language')=='arabic') المشاريع @else Projects @endif </a>
+              </li> --}}
+
+              {{-- Online Program --}}
+              <li class="{{ (Request()->is('online-program*') && !Request()->is('online-program/offline-syllabus*')) ? 'active' : '' }}">
+                <a href="#">
+                  @if(session()->get('language') == 'bangla') অনলাইন প্রোগ্রাম @elseif (session()->get('language') == 'arabic') البرنامج عبر الإنترنت @else Online Program @endif
+                </a>
+                <ul class="dropdown">
+                  <li class="text-left">
+                    <a href="{{ route('online_program.admission') }}">
+                      <i class="fa fa-graduation-cap me-1"></i> @if(session()->get('language') == 'bangla') অনলাইন প্রোগ্রাম ভর্তি @elseif (session()->get('language') == 'arabic') القبول عبر الإنترنت @else Online program admission @endif
+                    </a>
+                  </li>
+                  <li class="text-left">
+                    <a href="{{ route('online_program.fees') }}">
+                      <i class="fa fa-money me-1"></i> @if(session()->get('language') == 'bangla') অনলাইন প্রোগ্রাম ফি @elseif (session()->get('language') == 'arabic') رسوم البرنامج عبر الإنترنت @else Online program fees @endif
+                    </a>
+                  </li>
+                  <li class="text-left">
+                    <a href="{{ route('online_program.online_syllabus') }}">
+                      <i class="fa fa-book me-1"></i> @if(session()->get('language') == 'bangla') অনলাইন সিলেবাস @elseif (session()->get('language') == 'arabic') المنهج الدراسي عبر الإنترنت @else Online Syllabus @endif
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              {{-- Madrasah Mashq Admission Standalone Top-Level Menu --}}
+              <li class="{{ Request()->is('madrasah-mashq-admission*') ? 'active' : '' }}">
+                <a href="{{ route('madrasah.mashq.apply') }}">
+                  {{-- <i class="fa fa-graduation-cap me-1"></i> --}}
+                  @if(session()->get('language') == 'bangla') মাদ্রাসা মাশ্ক্ব এডমিশন @elseif (session()->get('language') == 'arabic') قبول مشق للمدارس @else Madrasah Mashq @endif
                 </a>
               </li>
 
-              <li class="{{ Request()->is('all_activism')? 'active':'' }}"><a href="{{ route('all.activism') }}">@if(session()->get('language')=='bangla') আমাদের কার্যক্রম @elseif (session()->get('language')=='arabic') المشاريع @else Projects @endif </a>
+              <li class="{{ Request()->is('gallery*') || Request()->is('video_gallery*') ? 'active' : '' }}">
+                <a href="#">@if(session()->get('language') == 'bangla') গ্যালারি @elseif (session()->get('language')=='arabic') صالة عرض @else Gallery @endif </a>
+                <ul class="dropdown">
+                  <li class="text-left"><a href="{{ route('gallery.page')}}">@if(session()->get('language')=='bangla') ফটো গ্যালারি @elseif (session()->get('language')=='arabic') معرض الصور @else Image Gallery @endif </a>
+                  </li>
+                  <li class="text-left"><a href="{{ route('video.gallery')}}">@if(session()->get('language')=='bangla') ভিডিও গ্যালারি @elseif (session()->get('language')=='arabic') معرض الفيديو @else Video Gallery @endif </a>
+                  </li>
+                </ul>
               </li>
 
-                <li><a href="#">@if(session()->get('language') == 'bangla') গ্যালারি @elseif (session()->get('language')=='arabic') صالة عرض @else Gallery @endif </a>
-                  <ul class="dropdown">
-                    <li class="text-left"><a href="{{ route('gallery.page')}}">@if(session()->get('language')=='bangla') ফটো গ্যালারি @elseif (session()->get('language')=='arabic') معرض الصور @else Image Gallery @endif </a>
-                    </li>
-                    <li class="text-left"><a href="{{ route('video.gallery')}}">@if(session()->get('language')=='bangla') ভিডিও গ্যালারি @elseif (session()->get('language')=='arabic') معرض الفيديو @else Video Gallery @endif </a>
-                    </li>
-                  </ul>
-                </li>
-
+              <li class="{{ Request()->is('book_page*') || Request()->is('book*') ? 'active' : '' }}">
+                <a href="{{ route('book.page')}}">@if(session()->get('language')=='bangla') বই @elseif (session()->get('language')=='arabic') كتاب @else Book @endif </a>
               </li>
-              <li><a href="{{ route('volunteer.form') }}">@if(session()->get('language')=='bangla') স্বেচ্ছাসেবক @elseif (session()->get('language')=='arabic') متطوع @else Volunteer @endif </a>
-
+             
+              <li class="{{ Request()->is('notices*') || Request()->is('notice*') ? 'active' : '' }}">
+                <a href="{{ route('frontend.notices.index') }}">
+                  @if(session()->get('language') == 'bangla') নোটিশ @elseif (session()->get('language') == 'arabic') الإعلانات @else Notices @endif
+                </a>
               </li>
               <li><a href="{{ route('blog.page') }}">@if(session()->get('language')=='bangla') সংবাদ @elseif (session()->get('language')=='arabic') أخبار @else News @endif </a>
 
@@ -143,10 +214,29 @@
               </li>
               @endguest
               @auth()
-              <li><a href="#">@if(session()->get('language') == 'bangla') ইউসার @elseif (session()->get('language')=='arabic') مستخدم @else User @endif </a>
+              <li><a href="#">@if(session()->get('language') == 'bangla') {{ auth()->user()->name ?? 'ইউজার' }} @elseif (session()->get('language')=='arabic') مستخدم @else {{ auth()->user()->name ?? 'User' }} @endif </a>
                 <ul class="dropdown">
-                  <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">@if(session()->get('language')=='bangla') লগআউট @elseif (session()->get('language')=='arabic') تسجيل خروج @else Logout @endif </a>
+                  @if(auth()->user()->is_admin == 1)
+                  <li class="text-left">
+                    <a href="{{ route('admin.home') }}">
+                      <i class="fa fa-dashboard me-1"></i> @if(session()->get('language')=='bangla') অ্যাডমিন প্যানেল @else Admin Panel @endif
+                    </a>
+                  </li>
+                  @endif
+                  @if(auth()->user()->role === 'student' || \App\Models\OnlineAdmission::where('user_id', auth()->id())->exists())
+                  <li class="text-left">
+                    <a href="{{ route('student.dashboard') }}">
+                      <i class="fa fa-graduation-cap me-1"></i> @if(session()->get('language')=='bangla') স্টুডেন্ট ড্যাশবোর্ড @else Student Dashboard @endif
+                    </a>
+                  </li>
+                  <li class="text-left">
+                    <a href="{{ route('student.payments') }}">
+                      <i class="fa fa-credit-card me-1"></i> @if(session()->get('language')=='bangla') ফি ও পেমেন্ট @else Fees & Payments @endif
+                    </a>
+                  </li>
+                  @endif
+                  <li class="text-left"><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"><i class="fa fa-sign-out me-1"></i> @if(session()->get('language')=='bangla') লগআউট @elseif (session()->get('language')=='arabic') تسجيل خروج @else Logout @endif </a>
                   </li>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
