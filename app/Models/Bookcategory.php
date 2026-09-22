@@ -20,6 +20,6 @@ class Bookcategory extends Model
     // Relationship With Book
     public function books()
     {
-        return $this->hasMany(Book::class);
+        return $this->hasMany(Book::class, 'category_id', 'id');
     }
 }

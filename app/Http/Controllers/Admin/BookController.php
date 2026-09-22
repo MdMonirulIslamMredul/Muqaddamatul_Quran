@@ -39,29 +39,38 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        // dd($request->all());
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_id' => 'nullable',
+            'title_bn' => 'nullable|string|max:255',
+            'title_en' => 'nullable|string|max:255',
+            'book_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'pdf_file' => 'nullable|mimes:pdf|max:51200',
+        ]);
+
         $imageNameOne = null;
-        // Check if a company book image is uploaded
         if ($request->hasFile('book_image') && $request->file('book_image')->isValid()) {
-            // Generate a unique name for the image
-            $imageNameOne = time().'.'.$request->book_image->extension();
-            // Move the uploaded file to a public directory
+            $imageNameOne = time().'_'.uniqid().'.'.$request->book_image->extension();
             $request->book_image->move(public_path('book_image'), $imageNameOne);
         }
+
         $imageNameTwo = null;
-        // Check if a company book image is uploaded
         if ($request->hasFile('pdf_file') && $request->file('pdf_file')->isValid()) {
-            // Generate a unique name for the image
-            $imageNameTwo = time().'.'.$request->pdf_file->extension();
-            // Move the uploaded file to a public directory
+            $imageNameTwo = time().'_'.uniqid().'.'.$request->pdf_file->extension();
             $request->pdf_file->move(public_path('pdf_file'), $imageNameTwo);
         }
 
         Book::create([
             'category_id' => $request->category_id,
-            'subcategory_id' => $request->subcategory_id,
+            'subcategory_id' => $request->subcategory_id ?: null,
             'title_en' => $request->title_en,
             'title_bn' => $request->title_bn,
             'title_ab' => $request->title_ab,
@@ -73,7 +82,6 @@ class BookController extends Controller
         ]);
 
         return redirect()->back()->with('message', 'Book Created Successfully 🙂');
-
     }
 
     /**
@@ -84,7 +92,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::with(['bookCategory', 'bookSubcategory'])->findOrFail($id);
+        return view('admin.book.show', compact('book'));
     }
 
     /**
@@ -110,36 +119,38 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-
         $book = Book::findOrFail($id);
-        // $jobcircular = JobCircular::findOrFail($id);
 
-        // Update image if a new one is provided
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_id' => 'nullable',
+            'title_bn' => 'nullable|string|max:255',
+            'title_en' => 'nullable|string|max:255',
+            'book_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'pdf_file' => 'nullable|mimes:pdf|max:51200',
+        ]);
+
         if ($request->hasFile('book_image') && $request->file('book_image')->isValid()) {
-            // Delete the old image
-            if ($book->book_image) {
-                unlink('book_image/' . $book->book_image);
+            if ($book->book_image && file_exists(public_path('book_image/' . $book->book_image))) {
+                @unlink(public_path('book_image/' . $book->book_image));
             }
-            // Upload new image
-            $imageNameOne = time().'.'.$request->book_image->extension();
+            $imageNameOne = time().'_'.uniqid().'.'.$request->book_image->extension();
             $request->book_image->move(public_path('book_image'), $imageNameOne);
             $book->book_image = $imageNameOne;
         }
+
         if ($request->hasFile('pdf_file') && $request->file('pdf_file')->isValid()) {
-            // Delete the old image
-            if ($book->pdf_file) {
-                unlink('pdf_file/' . $book->pdf_file);
+            if ($book->pdf_file && file_exists(public_path('pdf_file/' . $book->pdf_file))) {
+                @unlink(public_path('pdf_file/' . $book->pdf_file));
             }
-            // Upload new image
-            $imageNameTwo = time().'.'.$request->pdf_file->extension();
+            $imageNameTwo = time().'_'.uniqid().'.'.$request->pdf_file->extension();
             $request->pdf_file->move(public_path('pdf_file'), $imageNameTwo);
             $book->pdf_file = $imageNameTwo;
         }
 
         $book->update([
             'category_id' => $request->category_id,
-            'subcategory_id' => $request->subcategory_id,
+            'subcategory_id' => $request->subcategory_id ?: null,
             'title_en' => $request->title_en,
             'title_bn' => $request->title_bn,
             'title_ab' => $request->title_ab,
@@ -159,15 +170,22 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::where('id', $id)->first();
-        if($book->book_image != 'default_product.jpg'){
-            $photo_location_one = 'book_image/'.$book->book_image;
-            unlink($photo_location_one);
+        $book = Book::findOrFail($id);
+
+        if ($book->book_image && $book->book_image != 'default_product.jpg') {
+            $imagePath = public_path('book_image/' . $book->book_image);
+            if (file_exists($imagePath)) {
+                @unlink($imagePath);
+            }
         }
-        if($book->pdf_file != 'default_product.jpg'){
-            $photo_location_one = 'pdf_file/'.$book->pdf_file;
-            unlink($photo_location_one);
+
+        if ($book->pdf_file && $book->pdf_file != 'default_product.jpg') {
+            $pdfPath = public_path('pdf_file/' . $book->pdf_file);
+            if (file_exists($pdfPath)) {
+                @unlink($pdfPath);
+            }
         }
+
         $book->delete();
 
         return redirect()->back()->with('error', 'Book Deleted Successfully');
@@ -175,7 +193,7 @@ class BookController extends Controller
 
     public function getBookSubcategory($category_id)
     {
-        $subcategories = Booksubcategory::select(['id', 'subcategory_name'])->where('category_id', $category_id)->get();
+        $subcategories = Booksubcategory::select(['id', 'subcategory_name', 'subcategory_name_ban'])->where('category_id', $category_id)->get();
         return response()->json($subcategories);
     }
 }

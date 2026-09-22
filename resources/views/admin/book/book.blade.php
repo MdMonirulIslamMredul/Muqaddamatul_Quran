@@ -21,10 +21,10 @@
                                     <label for="category_id" class="form-label">Category <span
                                             class="text-danger">*</span></label>
                                     <select id="category_id" name="category_id"
-                                        class="form-select">
-                                        <option value="1">Select a Category</option>
+                                        class="form-select @error('category_id') is-invalid @enderror">
+                                        <option value="">Select a Category</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->category_name_ban ? $category->category_name_ban . ' (' . $category->category_name . ')' : $category->category_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -32,10 +32,10 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="subcategory_id" class="form-label">Subcategory <span
-                                            class="text-danger">*</span></label>
+                                            class="text-muted font-weight-normal">(Optional)</span></label>
                                     <select id="subcategory_id" name="subcategory_id"
                                         class="form-control" disabled>
-                                        <option value="">Select a Subcategory</option>
+                                        <option value="">Select a Subcategory (Optional)</option>
                                     </select>
                                 </div>
                             </div>
@@ -121,29 +121,35 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <table id="config-table" class="table display table-striped border no-wrap">
+                <table id="config-table" class="table display table-striped border">
                     <thead>
                     <tr>
-                        <th>List</th>
-                        <th>Last Updated</th>
-                        <th>Category</th>
-                        <th>Subcategory</th>
-                        <th>Book Image</th>
-                        <th>Title</th>
-                        <th>Action</th>
+                        <th data-priority="1">List</th>
+                        <th data-priority="2">Title</th>
+                        <th data-priority="4">Category</th>
+                        <th data-priority="5">Subcategory</th>
+                        <th data-priority="6">Book Image</th>
+                        {{-- <th>Last Updated</th> --}}
+                        <th data-priority="3">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($books as $key => $book)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $book->updated_at->format('d-M-Y') }}</td>
-                            <td>{{ $book->bookCategory->category_name??null }}</td>
-                            <td>{{ $book->bookSubcategory->subcategory_name??null }}</td>
+                            <td>{{ $book->title_en??null }}</td>
+                            <td>{{ $book->bookCategory->category_name_ban ?? $book->bookCategory->category_name ?? '-' }}</td>
+                            <td>
+                                @if($book->bookSubcategory)
+                                    <span class="badge bg-light text-dark border">{{ $book->bookSubcategory->subcategory_name_ban ?? $book->bookSubcategory->subcategory_name }}</span>
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
+                            </td>
                             <td>
                                 <img src="{{ asset('book_image') }}/{{ $book->book_image }}" style="height: 100px">
                             </td>
-                            <td>{{ $book->title_en??null }}</td>
+                            {{-- <td>{{ $book->updated_at->format('d-M-Y') }}</td> --}}
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div>
@@ -188,34 +194,76 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.1.1/tinymce.min.js" referrerpolicy="origin"></script>
 <script type="text/javascript">
-    tinymce.init({
-        selector: 'textarea#default'
-    });
+    if (typeof tinymce !== 'undefined') {
+        tinymce.init({
+            selector: 'textarea.editor',
+            height: 200,
+            menubar: false,
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
+        });
+    }
 </script>
 @include('admin.common.script')
 <script>
-    // For Create
-        // To Get Subcategory Data
-        const getBookSubcategory = (category_id, selected = null) => {
-            axios.get(`${window.location.origin}/get-booksubcategories/${category_id}`).then(res => {
-                let subcategories = res.data
-                let element = $('#subcategory_id')
-                // let upazila_element = $('#upazila_id').empty().append(`<option>Select a Thana</option>`).attr(
-                //     'disabled', 'disabled')
-                element.removeAttr('disabled')
-                element.empty()
-                element.append(`<option>Select a District</option>`)
-                subcategories.map((subcategory, index) => {
-                    // console.log(subcategory)
-                    element.append(
-                        `<option value="${subcategory.id}" ${selected == subcategory.id ?'selected' : ''}>${subcategory.subcategory_name}</option>`
-                    )
-                })
-            })
+    // Override the global #config-table DataTable init with a proper responsive setup
+    $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#config-table')) {
+            $('#config-table').DataTable().destroy();
         }
+        $('#config-table').DataTable({
+            responsive: {
+                details: {
+                    display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                    type: 'none',
+                    target: ''
+                }
+            },
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: 1 },
+                { responsivePriority: 3, targets: 5 },
+                { responsivePriority: 4, targets: 2 },
+                { responsivePriority: 5, targets: 3 },
+                { responsivePriority: 6, targets: 4 }
+            ]
+        });
+    });
+</script>
+<script>
+    const getBookSubcategory = (category_id, selected = null) => {
+        if (!category_id) {
+            let element = $('#subcategory_id');
+            element.empty().append('<option value="">Select a Subcategory (Optional)</option>').attr('disabled', 'disabled');
+            return;
+        }
+        axios.get(`${window.location.origin}/get-booksubcategories/${category_id}`).then(res => {
+            let subcategories = res.data;
+            let element = $('#subcategory_id');
+            element.removeAttr('disabled');
+            element.empty();
+            element.append('<option value="">Select a Subcategory (Optional)</option>');
+            subcategories.map((subcategory) => {
+                let displayName = subcategory.subcategory_name_ban ? `${subcategory.subcategory_name_ban} (${subcategory.subcategory_name})` : subcategory.subcategory_name;
+                element.append(
+                    `<option value="${subcategory.id}" ${selected == subcategory.id ? 'selected' : ''}>${displayName}</option>`
+                );
+            });
+        }).catch(err => {
+            console.error(err);
+        });
+    };
 
-        $('#category_id').on('change', function() {
-            getBookSubcategory($(this).val())
-        })
+    $('#category_id').on('change', function() {
+        getBookSubcategory($(this).val());
+    });
+
+    // Auto-populate on load if old value exists
+    $(document).ready(function() {
+        let initialCat = $('#category_id').val();
+        if (initialCat) {
+            getBookSubcategory(initialCat, "{{ old('subcategory_id') }}");
+        }
+    });
 </script>
 @endpush

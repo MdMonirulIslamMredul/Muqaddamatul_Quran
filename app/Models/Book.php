@@ -17,9 +17,9 @@ class Book extends Model
         return $this->belongsTo(Bookcategory::class, 'category_id', 'id');
     }
 
-    // Relationship With booksubcategory
+    // Relationship With Booksubcategory
     public function bookSubcategory()
     {
-        return $this->belongsTo(booksubcategory::class, 'subcategory_id', 'id');
+        return $this->belongsTo(Booksubcategory::class, 'subcategory_id', 'id');
     }
 }

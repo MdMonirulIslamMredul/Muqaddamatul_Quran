@@ -37,7 +37,7 @@
                                 </span>
                             @enderror
                         </div>
-                        {{-- <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="category_name_ab">Category Name (AB)</label>
                             <input type="text" name="category_name_ab" class="form-control @error('category_name_ab')
                             is-invalid
@@ -47,7 +47,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div> --}}
+                        </div>
                         <div class="table-responsive">
                             <button type="submit" class="btn btn-info">Submit</button>
                         </div>
@@ -60,15 +60,15 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <table id="config-table" class="table display table-striped border no-wrap">
+                <table id="config-table" class="table display table-striped border">
                     <thead>
                     <tr>
-                        <th>List</th>
-                        <th>Last Updated</th>
-                        <th>Category Name (EN)</th>
-                        <th>Category Name (BN)</th>
-                        <th>Category Name (AB)</th>
-                        <th>Action</th>
+                        <th data-priority="1">List</th>
+                        <th data-priority="5">Last Updated</th>
+                        <th data-priority="2">Category Name (EN)</th>
+                        <th data-priority="4">Category Name (BN)</th>
+                        <th data-priority="6">Category Name (AB)</th>
+                        <th data-priority="3">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -119,4 +119,28 @@
 
 @push('admin_script')
 @include('admin.common.script')
+<script>
+    $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#config-table')) {
+            $('#config-table').DataTable().destroy();
+        }
+        $('#config-table').DataTable({
+            responsive: {
+                details: {
+                    display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                    type: 'none',
+                    target: ''
+                }
+            },
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: 2 },
+                { responsivePriority: 3, targets: 5 },
+                { responsivePriority: 4, targets: 3 },
+                { responsivePriority: 5, targets: 1 },
+                { responsivePriority: 6, targets: 4 }
+            ]
+        });
+    });
+</script>
 @endpush

@@ -1,11 +1,11 @@
 @extends('frontend.master')
 @section('title')
     @if (session()->get('language') == 'bangla')
-        {{ $selectedCategory ? ($selectedCategory->category_name_ban ?? $selectedCategory->category_name) : 'বইসমূহ' }}
+        {{ $category->category_name_ban ?? $category->category_name }}
     @elseif (session()->get('language') == 'arabic')
-        {{ $selectedCategory ? ($selectedCategory->category_name_ab ?? $selectedCategory->category_name) : 'الكتب والمؤلفات' }}
+        {{ $category->category_name_ab ?? $category->category_name }}
     @else
-        {{ $selectedCategory ? $selectedCategory->category_name : 'Books Library' }}
+        {{ $category->category_name }}
     @endif
 @endsection
 
@@ -109,6 +109,34 @@
         .sub-nav-link:hover {
             color: #29b54e;
             background: #f1f5f9;
+            text-decoration: none;
+        }
+
+        /* Subcategory chips */
+        .subcat-chips-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .subcat-chip {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .subcat-chip:hover,
+        .subcat-chip.active {
+            background: #29b54e;
+            color: #fff;
+            border-color: #29b54e;
             text-decoration: none;
         }
 
@@ -301,11 +329,11 @@
                     <div class="col-md-12 text-center">
                         <h2 class="title text-white font-weight-700 mb-10">
                             @if (session()->get('language') == 'bangla')
-                                {{ $selectedCategory ? ($selectedCategory->category_name_ban ?? $selectedCategory->category_name) : 'ইসলামিক বইসমূহ' }}
+                                {{ $category->category_name_ban ?? $category->category_name }}
                             @elseif (session()->get('language') == 'arabic')
-                                {{ $selectedCategory ? ($selectedCategory->category_name_ab ?? $selectedCategory->category_name) : 'المكتبة الإسلامية والكتب' }}
+                                {{ $category->category_name_ab ?? $category->category_name }}
                             @else
-                                {{ $selectedCategory ? $selectedCategory->category_name : 'Islamic Academy Library' }}
+                                {{ $category->category_name }}
                             @endif
                         </h2>
                         <ul class="breadcrumb white justify-content-center">
@@ -317,17 +345,15 @@
                                     @if (session()->get('language') == 'bangla') বই @elseif (session()->get('language') == 'arabic') الكتب @else Books @endif
                                 </a>
                             </li>
-                            @if ($selectedCategory)
-                                <li class="active text-success">
-                                    @if (session()->get('language') == 'bangla')
-                                        {{ $selectedCategory->category_name_ban ?? $selectedCategory->category_name }}
-                                    @elseif (session()->get('language') == 'arabic')
-                                        {{ $selectedCategory->category_name_ab ?? $selectedCategory->category_name }}
-                                    @else
-                                        {{ $selectedCategory->category_name }}
-                                    @endif
-                                </li>
-                            @endif
+                            <li class="active text-success">
+                                @if (session()->get('language') == 'bangla')
+                                    {{ $category->category_name_ban ?? $category->category_name }}
+                                @elseif (session()->get('language') == 'arabic')
+                                    {{ $category->category_name_ab ?? $category->category_name }}
+                                @else
+                                    {{ $category->category_name }}
+                                @endif
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -339,28 +365,18 @@
     <div class="rs-popular-courses style4 pt-60 pb-80">
         <div class="container">
             <div class="row">
-                <!-- Main Books Grid (Left/Main column) -->
+                <!-- Books List Column -->
                 <div class="col-lg-9 col-md-8">
                     <!-- Category Header Info Bar -->
-                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-25 pb-15 border-bottom">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-20 pb-15 border-bottom">
                         <div>
                             <h4 class="mb-5 font-weight-700 text-dark">
-                                @if ($selectedCategory)
-                                    @if (session()->get('language') == 'bangla')
-                                        {{ $selectedCategory->category_name_ban ?? $selectedCategory->category_name }}
-                                    @elseif (session()->get('language') == 'arabic')
-                                        {{ $selectedCategory->category_name_ab ?? $selectedCategory->category_name }}
-                                    @else
-                                        {{ $selectedCategory->category_name }}
-                                    @endif
+                                @if (session()->get('language') == 'bangla')
+                                    {{ $category->category_name_ban ?? $category->category_name }}
+                                @elseif (session()->get('language') == 'arabic')
+                                    {{ $category->category_name_ab ?? $category->category_name }}
                                 @else
-                                    @if (session()->get('language') == 'bangla')
-                                        সকল বই
-                                    @elseif (session()->get('language') == 'arabic')
-                                        جميع الكتب
-                                    @else
-                                        All Books
-                                    @endif
+                                    {{ $category->category_name }}
                                 @endif
                             </h4>
                             <span class="text-muted font-13">
@@ -374,13 +390,32 @@
                             </span>
                         </div>
 
-                        @if ($selectedCategory)
-                            <a href="{{ route('book.page') }}" class="btn btn-sm btn-outline-secondary font-12 font-weight-600">
-                                <i class="fa fa-times me-1"></i>
-                                @if (session()->get('language') == 'bangla') ফিল্টার মুছুন @elseif (session()->get('language') == 'arabic') إزالة التصفية @else Clear Filter @endif
-                            </a>
-                        @endif
+                        <a href="{{ route('book.page') }}" class="btn btn-sm btn-outline-secondary font-12 font-weight-600">
+                            <i class="fa fa-arrow-left me-1"></i>
+                            @if (session()->get('language') == 'bangla') সকল বই দেখুন @elseif (session()->get('language') == 'arabic') عرض جميع الكتب @else View All Books @endif
+                        </a>
                     </div>
+
+                    {{-- Optional Subcategories Filter Chips if available --}}
+                    @if ($category->bookSubcategories && $category->bookSubcategories->count() > 0)
+                        <div class="subcat-chips-wrap">
+                            <a href="{{ route('category.book', $category->id) }}" class="subcat-chip active">
+                                <i class="fa fa-check me-1"></i>
+                                @if (session()->get('language') == 'bangla') সবগুলো @elseif (session()->get('language') == 'arabic') الكل @else All @endif
+                            </a>
+                            @foreach ($category->bookSubcategories as $subcategory)
+                                <a href="{{ route('subcategory.book', $subcategory->id) }}" class="subcat-chip">
+                                    @if (session()->get('language') == 'bangla')
+                                        {{ $subcategory->subcategory_name_ban ?? $subcategory->subcategory_name }}
+                                    @elseif (session()->get('language') == 'arabic')
+                                        {{ $subcategory->subcategory_name_ab ?? $subcategory->subcategory_name }}
+                                    @else
+                                        {{ $subcategory->subcategory_name }}
+                                    @endif
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
 
                     <!-- Books Grid -->
                     <div class="row">
@@ -403,18 +438,16 @@
                                     <div class="book-card-body">
                                         <!-- Category & Optional Subcategory Tags -->
                                         <div class="mb-2">
-                                            @if ($book->bookCategory)
-                                                <a href="{{ route('category.book', $book->category_id) }}" class="book-category-pill">
-                                                    <i class="fa fa-folder-open-o me-1"></i>
-                                                    @if (session()->get('language') == 'bangla')
-                                                        {{ $book->bookCategory->category_name_ban ?? $book->bookCategory->category_name }}
-                                                    @elseif (session()->get('language') == 'arabic')
-                                                        {{ $book->bookCategory->category_name_ab ?? $book->bookCategory->category_name }}
-                                                    @else
-                                                        {{ $book->bookCategory->category_name }}
-                                                    @endif
-                                                </a>
-                                            @endif
+                                            <span class="book-category-pill">
+                                                <i class="fa fa-folder-open-o me-1"></i>
+                                                @if (session()->get('language') == 'bangla')
+                                                    {{ $category->category_name_ban ?? $category->category_name }}
+                                                @elseif (session()->get('language') == 'arabic')
+                                                    {{ $category->category_name_ab ?? $category->category_name }}
+                                                @else
+                                                    {{ $category->category_name }}
+                                                @endif
+                                            </span>
 
                                             {{-- Subcategory is optional: ONLY render if inserted --}}
                                             @if ($book->bookSubcategory)
@@ -478,11 +511,11 @@
                                     <i class="fa fa-book fa-4x text-muted mb-15"></i>
                                     <h4 class="text-secondary font-weight-600">
                                         @if (session()->get('language') == 'bangla')
-                                            কোন বই পাওয়া যায়নি
+                                            এই বিভাগে কোন বই পাওয়া যায়নি
                                         @elseif (session()->get('language') == 'arabic')
-                                            لم يتم العثور على كتب
+                                            لم يتم العثور على كتب في هذا القسم
                                         @else
-                                            No Books Found
+                                            No Books Found In This Category
                                         @endif
                                     </h4>
                                     <a href="{{ route('book.page') }}" class="btn btn-theme-colored btn-sm mt-10">
@@ -509,7 +542,7 @@
                     @endif
                 </div>
 
-                <!-- Category Sidebar (Focus mainly on Book Categories) -->
+                <!-- Category Sidebar -->
                 <div class="col-lg-3 col-md-4">
                     <div class="category-sidebar-card">
                         <div class="category-sidebar-title">
@@ -526,9 +559,8 @@
                         </div>
 
                         <ul class="category-nav-list">
-                            <!-- All Books Option -->
                             <li class="category-nav-item">
-                                <a href="{{ route('book.page') }}" class="category-nav-link {{ empty($selectedCategoryId) ? 'active' : '' }}">
+                                <a href="{{ route('book.page') }}" class="category-nav-link">
                                     <span>
                                         <i class="fa fa-list-ul me-2"></i>
                                         @if (session()->get('language') == 'bangla')
@@ -539,42 +571,40 @@
                                             All Categories
                                         @endif
                                     </span>
-                                    <span class="badge-count">{{ $totalBooksCount ?? $books->total() }}</span>
+                                    <span class="badge-count">{{ $totalBooksCount }}</span>
                                 </a>
                             </li>
 
-                            <!-- Categories List -->
-                            @foreach ($categories as $category)
+                            @foreach ($categories as $cat)
                                 <li class="category-nav-item">
-                                    <a href="{{ route('category.book', $category->id) }}"
-                                        class="category-nav-link {{ (isset($selectedCategoryId) && $selectedCategoryId == $category->id) ? 'active' : '' }}">
+                                    <a href="{{ route('category.book', $cat->id) }}"
+                                        class="category-nav-link {{ $category->id == $cat->id ? 'active' : '' }}">
                                         <span>
                                             <i class="fa fa-bookmark-o me-2 text-success"></i>
                                             @if (session()->get('language') == 'bangla')
-                                                {{ $category->category_name_ban ?? $category->category_name }}
+                                                {{ $cat->category_name_ban ?? $cat->category_name }}
                                             @elseif (session()->get('language') == 'arabic')
-                                                {{ $category->category_name_ab ?? $category->category_name }}
+                                                {{ $cat->category_name_ab ?? $cat->category_name }}
                                             @else
-                                                {{ $category->category_name }}
+                                                {{ $cat->category_name }}
                                             @endif
                                         </span>
-                                        <span class="badge-count">{{ $category->books_count }}</span>
+                                        <span class="badge-count">{{ $cat->books_count }}</span>
                                     </a>
 
-                                    {{-- Optional Subcategories (only displayed if present) --}}
-                                    @if ($category->bookSubcategories && $category->bookSubcategories->count() > 0)
+                                    @if ($cat->bookSubcategories && $cat->bookSubcategories->count() > 0)
                                         <ul class="sub-nav-list">
-                                            @foreach ($category->bookSubcategories as $subcategory)
+                                            @foreach ($cat->bookSubcategories as $sub)
                                                 <li>
-                                                    <a href="{{ route('subcategory.book', $subcategory->id) }}" class="sub-nav-link">
+                                                    <a href="{{ route('subcategory.book', $sub->id) }}" class="sub-nav-link">
                                                         <span>
                                                             <i class="fa fa-angle-right me-1 text-muted"></i>
                                                             @if (session()->get('language') == 'bangla')
-                                                                {{ $subcategory->subcategory_name_ban ?? $subcategory->subcategory_name }}
+                                                                {{ $sub->subcategory_name_ban ?? $sub->subcategory_name }}
                                                             @elseif (session()->get('language') == 'arabic')
-                                                                {{ $subcategory->subcategory_name_ab ?? $subcategory->subcategory_name }}
+                                                                {{ $sub->subcategory_name_ab ?? $sub->subcategory_name }}
                                                             @else
-                                                                {{ $subcategory->subcategory_name }}
+                                                                {{ $sub->subcategory_name }}
                                                             @endif
                                                         </span>
                                                     </a>
