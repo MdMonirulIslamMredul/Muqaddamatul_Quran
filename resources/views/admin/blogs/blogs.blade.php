@@ -9,17 +9,22 @@
                         {{session('message')}}
                     </div>
                 @endif
+                @if(session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{session('error')}}
+                    </div>
+                @endif
                 <div class="card-body">
                     <form class="form-horizontal" action="{{route('store.blogs')}}" enctype="multipart/form-data" method="POST">
                         @csrf
 
                         <h3>Front page information</h3>
                         <div class="form-group">
-                            <label> Title(EN)</label>
+                            <label> Title (English)</label>
                             <input type="text" class="form-control" rows="5" name="title" id="title" placeholder="Blogs Title">
                         </div>
                         <div class="form-group">
-                            <label> Title(BN)</label>
+                            <label> Title (Bangla)</label>
                             <input type="text" class="form-control" rows="5" name="title_bn" id="title" placeholder="Blogs Title">
                         </div>
                         {{-- <div class="form-group">
@@ -32,11 +37,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label> short Details(EN)</label>
+                            <label> Short Details (English)</label>
                             <textarea  id="tinymce" class="editor form-control" col="10" row="3" name="short_details"></textarea>
                         </div>
                         <div class="form-group">
-                            <label> short Details(BN)</label>
+                            <label> Short Details (Bangla)</label>
                             <textarea  id="tinymce" class="editor form-control" col="10" row="3" name="short_details_bn"></textarea>
                         </div>
                         {{-- <div class="form-group">
@@ -62,11 +67,11 @@
                             <input type="file" name="details_image3" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label> Long Details one(EN)</label>
+                            <label> Long Details one (English)</label>
                             <textarea id="tinymce" class="editor form-control" row="3" name="details1"></textarea>
                         </div>
                         <div class="form-group">
-                            <label> Long Details one(BN)</label>
+                            <label> Long Details one (Bangla)</label>
                             <textarea id="tinymce" class="editor form-control" row="3" name="details1_bn"></textarea>
                         </div>
                         {{-- <div class="form-group">
@@ -74,11 +79,11 @@
                             <textarea id="tinymce" class="editor form-control" row="3" name="details1_ab"></textarea>
                         </div> --}}
                         <div class="form-group">
-                            <label> Long Details two(EN)</label>
+                            <label> Long Details two (English)</label>
                             <textarea id="tinymce" class="editor form-control" row="3" name="details2"></textarea>
                         </div>
                         <div class="form-group">
-                            <label> Long Details two(BN)</label>
+                            <label> Long Details two (Bangla)</label>
                             <textarea id="tinymce" class="editor form-control" row="3" name="details2_bn"></textarea>
                         </div>
                         {{-- <div class="form-group">
@@ -132,7 +137,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('edit.blogs',['id'=>$blog->id]) }}" class="btn btn-primary btn-sm editProduct">Edit</a>
-
+                                <a href="{{ route('delete.blogs', ['id' => $blog->id]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this blog?');">Delete</a>
                             </td>
                         </tr>
                     @endforeach

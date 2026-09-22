@@ -9,6 +9,11 @@
                         {{session('message')}}
                     </div>
                 @endif
+                @if(session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{session('error')}}
+                    </div>
+                @endif
                 <div class="card-body">
                     <form action="{{route('update.blogs')}}" enctype="multipart/form-data" method="POST">
                         @csrf
@@ -16,11 +21,11 @@
 
                         <h3>Front page information</h3>
                         <div class="form-group">
-                            <label> Title(EN)</label>
+                            <label> Title (English)</label>
                             <input type="text" class="form-control" rows="5" name="title" id="title" value="{{$blog->title}}" placeholder="Blogs Title">
                         </div>
                         <div class="form-group">
-                            <label> Title(BN)</label>
+                            <label> Title (Bangla)</label>
                             <input type="text" class="form-control" rows="5" name="title_bn" id="title" value="{{$blog->title_bn}}" placeholder="Blogs Title">
                         </div>
                         {{-- <div class="form-group">
@@ -33,11 +38,11 @@
                         </div>
                         <img src="{{asset($blog->main_image)}}" class="mb-2" height="100" width="100" alt="">
                         <div class="form-group">
-                            <label> Small Details(EN)</label>
+                            <label> Short Details (English)</label>
                             <textarea id="tinymce" class="editor form-control" col="10" row="3" name="short_details">{!! $blog->short_details !!}</textarea>
                         </div>
                         <div class="form-group">
-                            <label> short Details(BN)</label>
+                            <label> Short Details (Bangla)</label>
                             <textarea  id="tinymce" class="editor form-control" col="10" row="3" name="short_details_bn">{!! $blog->short_details_bn !!}</textarea>
                         </div>
                         {{-- <div class="form-group">
@@ -68,11 +73,11 @@
                         <img src="{{asset($blog->details_image3)}}" class="mb-2" height="100" width="100" alt="">
 
                         <div class="form-group">
-                            <label>Blogs Long Details one</label>
+                            <label> Long Details one (English)</label>
                             <textarea id="tinymce" class="editor form-control" col="10" row="3" name="details1">{!! $blog->details1 !!}</textarea>
                         </div>
                         <div class="form-group">
-                            <label>Blog Long Details one(BN)</label>
+                            <label> Long Details one (Bangla)</label>
                             <textarea id="tinymce" class="editor form-control" row="3" name="details1_bn">{!! $blog->details1_bn !!}</textarea>
                         </div>
                         {{-- <div class="form-group">
@@ -80,11 +85,11 @@
                             <textarea id="tinymce" class="editor form-control" row="3" name="details1_ab">{!! $blog->details1_ab !!}</textarea>
                         </div> --}}
                         <div class="form-group">
-                            <label>Blogs Long Details two</label>
+                            <label> Long Details two (English)</label>
                             <textarea id="tinymce" class="editor form-control" col="10" row="3" name="details2">{!! $blog->details2 !!}</textarea>
                         </div>
                         <div class="form-group">
-                            <label>Blog Long Details two(BN)</label>
+                            <label> Long Details two (Bangla)</label>
                             <textarea id="tinymce" class="editor form-control" row="3" name="details2_bn">{!! $blog->details2_bn !!}</textarea>
                         </div>
                         {{-- <div class="form-group">
@@ -108,6 +113,8 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-info">Update</button>
+                        <a href="{{ route('add.blogs') }}" class="btn btn-secondary">Back to List</a>
+                        <a href="{{ route('delete.blogs', ['id' => $blog->id]) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this blog?');">Delete</a>
                     </form>
                 </div>
             </div>
