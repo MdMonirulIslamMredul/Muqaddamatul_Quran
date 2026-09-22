@@ -31,20 +31,34 @@
 
                     <div class="row g-3">
                         <!-- Photo Title -->
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-5 form-group">
                             <label class="form-label fw-bold text-dark">ছবির শিরোনাম / ক্যাপশন (Photo Title)</label>
                             <input type="text" name="title" class="form-control" placeholder="যেমনঃ বার্ষিক ক্রীড়া প্রতিযোগিতা" value="{{ old('title', $gallery->title) }}">
                             <small class="text-muted font-11 d-block mt-1" style="color: #64748b !important;">ছবির সংক্ষিপ্ত শিরোনাম বা বিষয়</small>
                         </div>
 
+                        <!-- Photo Category -->
+                        <div class="col-md-4 form-group">
+                            <label class="form-label fw-bold text-dark">ফটো ক্যাটাগরি (Photo Category)</label>
+                            <select class="form-select" name="category_id" style="color: #212529; font-weight: 500;">
+                                <option value="">-- ক্যাটাগরি নির্বাচন করুন (ঐচ্ছিক) --</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}" {{ old('category_id', $gallery->category_id) == $cat->id ? 'selected' : '' }}>
+                                        {{ $cat->name_bn }} {{ $cat->name_en ? '('.$cat->name_en.')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small class="text-muted font-11 d-block mt-1" style="color: #64748b !important;">ছবিটি কোন ক্যাটাগরির অন্তর্ভুক্ত</small>
+                        </div>
+
                         <!-- Add to Homepage -->
-                        <div class="col-md-6 form-group">
-                            <label class="form-label fw-bold text-dark">হোমপেজে প্রদর্শন করবেন? (Show on Homepage)</label>
+                        <div class="col-md-3 form-group">
+                            <label class="form-label fw-bold text-dark">হোমপেজে প্রদর্শন করবেন?</label>
                             <select class="form-select" name="add_home" style="color: #212529; font-weight: 500;">
                                 <option value="1" {{ old('add_home', $gallery->add_home) == 1 ? 'selected' : '' }}>হ্যাঁ (Yes - Show on Home)</option>
                                 <option value="0" {{ old('add_home', $gallery->add_home) === 0 ? 'selected' : '' }}>না (No - Only in Gallery Page)</option>
                             </select>
-                            <small class="text-muted font-11 d-block mt-1" style="color: #64748b !important;">হোমপেজের ফটো গ্যালারি সেকশনে দেখাতে চান কিনা</small>
+                            <small class="text-muted font-11 d-block mt-1" style="color: #64748b !important;">হোমপেজের গ্যালারি সেকশনে দেখাতে চান কিনা</small>
                         </div>
 
                         <!-- Photo Description -->

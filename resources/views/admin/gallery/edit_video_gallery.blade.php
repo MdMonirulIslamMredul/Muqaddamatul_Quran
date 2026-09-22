@@ -98,12 +98,31 @@
                         @csrf
                         <input type="hidden" value="{{ $edit_video->id }}" name="id">
 
-                        <!-- Title -->
-                        <div class="form-group mb-4">
-                            <label class="form-label font-weight-bold">
-                                Video Title <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" name="title" class="form-control form-control-lg" placeholder="Video Title" value="{{ old('title', $edit_video->title) }}" required>
+                        <!-- Title & Category Row -->
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group mb-4">
+                                    <label class="form-label font-weight-bold">
+                                        Video Title <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" name="title" class="form-control form-control-lg" placeholder="Video Title" value="{{ old('title', $edit_video->title) }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <label class="form-label font-weight-bold">
+                                        Video Category
+                                    </label>
+                                    <select class="form-control form-control-lg" name="category_id">
+                                        <option value="">-- Select Category (Optional) --</option>
+                                        @foreach($categories as $cat)
+                                            <option value="{{ $cat->id }}" {{ old('category_id', $edit_video->category_id) == $cat->id ? 'selected' : '' }}>
+                                                {{ $cat->name_bn }} {{ $cat->name_en ? '('.$cat->name_en.')' : '' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Replace Raw Video File -->

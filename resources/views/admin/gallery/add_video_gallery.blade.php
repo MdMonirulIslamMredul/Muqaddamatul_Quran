@@ -65,9 +65,14 @@
                     <h4 class="mb-0 text-white font-weight-bold">
                         <i class="fa fa-video mr-2"></i> Add Video to Gallery
                     </h4>
-                    <span class="badge bg-light text-primary font-14">
-                        Supports MP4, MKV, WMV & Embeds
-                    </span>
+                    <div>
+                        <a href="{{ route('gallery.categories.index', ['type' => 'video']) }}" class="btn btn-light btn-sm font-weight-bold text-primary mr-2">
+                            <i class="fa fa-tags mr-1"></i> Manage Categories
+                        </a>
+                        <span class="badge bg-light text-primary font-14">
+                            Supports MP4, MKV, WMV & Embeds
+                        </span>
+                    </div>
                 </div>
 
                 @if(session('message'))
@@ -99,12 +104,36 @@
                     <form id="videoUploadForm" class="form-horizontal" action="{{ route('store.video.gallery') }}" enctype="multipart/form-data" method="POST">
                         @csrf
 
-                        <!-- Video Title -->
-                        <div class="form-group mb-4">
-                            <label class="form-label font-weight-bold">
-                                Video Title <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" name="title" id="videoTitleInput" class="form-control form-control-lg" placeholder="Enter an engaging video title (e.g. Annual Quran Recitation 2026)" value="{{ old('title') }}" required>
+                        <!-- Video Title & Category Row -->
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group mb-4">
+                                    <label class="form-label font-weight-bold">
+                                        Video Title <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" name="title" id="videoTitleInput" class="form-control form-control-lg" placeholder="Enter an engaging video title (e.g. Annual Quran Recitation 2026)" value="{{ old('title') }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <label class="form-label font-weight-bold mb-0">
+                                            Video Category
+                                        </label>
+                                        <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none font-weight-bold text-primary" style="font-size: 13px;" data-toggle="modal" data-target="#quickAddVideoCategoryModal" data-bs-toggle="modal" data-bs-target="#quickAddVideoCategoryModal">
+                                            <i class="fa fa-plus-circle mr-1"></i>+ New Category
+                                        </button>
+                                    </div>
+                                    <select class="form-control form-control-lg" name="category_id" id="videoCategorySelect">
+                                        <option value="">-- Select Category (Optional) --</option>
+                                        @foreach($categories as $cat)
+                                            <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                                {{ $cat->name_bn }} {{ $cat->name_en ? '('.$cat->name_en.')' : '' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Video Source Type Selector -->
@@ -370,9 +399,10 @@
                         <table id="config-table" class="table table-hover table-striped align-middle border">
                             <thead class="table-light">
                             <tr>
-                                <th style="width: 60px;">#</th>
-                                <th style="width: 140px;">Preview</th>
+                                <th style="width: 50px;">#</th>
+                                <th style="width: 130px;">Preview</th>
                                 <th>Title & Source</th>
+                                <th style="width: 140px;">Category</th>
                                 <th>Type</th>
                                 <th>Status</th>
                                 <th style="width: 130px;">Action</th>
@@ -422,6 +452,15 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if($video->category)
+                                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger px-2 py-1">
+                                                <i class="fa fa-tag mr-1"></i> {{ $video->category->name_bn }}
+                                            </span>
+                                        @else
+                                            <span class="badge bg-light text-muted border px-2 py-1">No Category</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @if($video->video_file)
                                             <span class="badge bg-primary text-white">
                                                 <i class="fa fa-video mr-1"></i> Raw Video ({{ strtoupper(pathinfo($video->video_file, PATHINFO_EXTENSION)) }})
@@ -452,7 +491,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">
+                                    <td colspan="7" class="text-center py-4 text-muted">
                                         <i class="fa fa-video-slash fa-2x mb-2 text-secondary d-block"></i>
                                         No videos in gallery yet. Upload your first video above!
                                     </td>
@@ -461,6 +500,49 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Add Video Category Modal -->
+    <div class="modal fade" id="quickAddVideoCategoryModal" tabindex="-1" aria-labelledby="quickAddVideoCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold text-danger" id="quickAddVideoCategoryModalLabel">
+                        <i class="fa fa-plus-circle mr-1"></i> Create New Video Category
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="quickVideoCatAlert" class="alert alert-danger d-none py-2 px-3 small"></div>
+                    <form id="quickVideoCatForm">
+                        @csrf
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold text-dark">Category Name (Bangla) <span class="text-danger">*</span></label>
+                            <input type="text" name="name_bn" id="quickVideoCatNameBn" class="form-control" placeholder="e.g. ক্বিরাত ও হামদ-নাশীদ" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold text-dark">Category Name (English - Optional)</label>
+                            <input type="text" name="name_en" id="quickVideoCatNameEn" class="form-control" placeholder="e.g. Qirat & Nasheed">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold text-dark">Usage Type</label>
+                            <select class="form-control" name="type">
+                                <option value="video" selected>🎥 Video Gallery Only</option>
+                                <option value="both">✨ Both Photo & Video Gallery</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="saveQuickVideoCatBtn" class="btn btn-danger btn-sm font-weight-bold">
+                        <i class="fa fa-check mr-1"></i> Save Category
+                    </button>
                 </div>
             </div>
         </div>
@@ -885,5 +967,81 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.send(formData);
     });
 });
+</script>
+    $(document).ready(function () {
+        if ($.fn.DataTable.isDataTable('#config-table')) {
+            $('#config-table').DataTable().destroy();
+        }
+        $('#config-table').DataTable({
+            responsive: true,
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 2, targets: 2 },
+                { responsivePriority: 3, targets: [1, 6] }
+            ]
+        });
+
+        // Quick Add Video Category AJAX
+        const saveVideoCatBtn = document.getElementById('saveQuickVideoCatBtn');
+        const videoCatForm = document.getElementById('quickVideoCatForm');
+        const videoCatAlert = document.getElementById('quickVideoCatAlert');
+        const videoCatSelect = document.getElementById('videoCategorySelect');
+
+        if (saveVideoCatBtn) {
+            saveVideoCatBtn.addEventListener('click', function() {
+                videoCatAlert.classList.add('d-none');
+                const nameBn = document.getElementById('quickVideoCatNameBn').value.trim();
+                if (!nameBn) {
+                    videoCatAlert.textContent = 'Please enter category name in Bangla.';
+                    videoCatAlert.classList.remove('d-none');
+                    return;
+                }
+
+                saveVideoCatBtn.disabled = true;
+                saveVideoCatBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-1"></i> Saving...';
+
+                const formData = new FormData(videoCatForm);
+
+                fetch("{{ route('gallery.categories.quick_store') }}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    saveVideoCatBtn.disabled = false;
+                    saveVideoCatBtn.innerHTML = '<i class="fa fa-check mr-1"></i> Save Category';
+
+                    if (data.success && data.category) {
+                        const opt = document.createElement('option');
+                        opt.value = data.category.id;
+                        opt.textContent = data.category.name_bn + (data.category.name_en ? ' (' + data.category.name_en + ')' : '');
+                        opt.selected = true;
+                        videoCatSelect.appendChild(opt);
+
+                        // Dismiss modal (supports both Bootstrap 4 and 5)
+                        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('quickAddVideoCategoryModal')) || new bootstrap.Modal(document.getElementById('quickAddVideoCategoryModal'));
+                            modal.hide();
+                        } else {
+                            $('#quickAddVideoCategoryModal').modal('hide');
+                        }
+                        videoCatForm.reset();
+                    } else {
+                        videoCatAlert.textContent = data.message || 'Failed to save category.';
+                        videoCatAlert.classList.remove('d-none');
+                    }
+                })
+                .catch(err => {
+                    saveVideoCatBtn.disabled = false;
+                    saveVideoCatBtn.innerHTML = '<i class="fa fa-check mr-1"></i> Save Category';
+                    videoCatAlert.textContent = 'Server error occurred. Please try again.';
+                    videoCatAlert.classList.remove('d-none');
+                });
+            });
+        }
+    });
 </script>
 @endpush

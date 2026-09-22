@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Gallery;
 use App\Models\VideoGallery;
+use App\Models\GalleryCategory;
 use App\Models\BannerAndTitle;
 use Carbon\Carbon;
 
@@ -14,29 +15,37 @@ class GalleryController extends Controller
     //
     public function tech_web_add_gallery()
     {
-        return view('admin.gallery.gallery',[
-            'galleries'=>Gallery::get()
-        ]);
-
+        $categories = GalleryCategory::forPhotos()->orderBy('order_level')->orderBy('name_bn')->get();
+        $galleries = Gallery::with('category')->latest()->get();
+        return view('admin.gallery.gallery', compact('galleries', 'categories'));
     }
 
     public function tech_web_store_gallery(Request $request)
     {
+        $request->validate([
+            'category_id' => 'nullable|exists:gallery_categories,id',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
+        ]);
         Gallery::save_gallery($request);
-        return back()->with('message','gallery added successfully');
+        return back()->with('message','ফটো গ্যালারিতে ছবি সফলভাবে যুক্ত করা হয়েছে');
     }
 
     public function tech_web_edit_gallery($id)
     {
-        return view('admin.gallery.edit_gallery',[
-            'gallery'=>Gallery::find($id),
-        ]);
+        $gallery = Gallery::with('category')->findOrFail($id);
+        $categories = GalleryCategory::forPhotos()->orderBy('order_level')->orderBy('name_bn')->get();
+        return view('admin.gallery.edit_gallery', compact('gallery', 'categories'));
     }
 
     public function tech_web_update_gallery(Request $request)
     {
+        $request->validate([
+            'id'          => 'required|exists:galleries,id',
+            'category_id' => 'nullable|exists:gallery_categories,id',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+        ]);
         Gallery::update_gallery($request);
-        return back()->with('message','gallery update successfully');
+        return back()->with('message','ফটো গ্যালারি তথ্য সফলভাবে হালনাগাদ করা হয়েছে');
     }
 
     public function tech_web_delete_gallery($id)
@@ -54,13 +63,15 @@ class GalleryController extends Controller
 
     // video gallery start
     public function tech_web_add_video_gallery(){
-        $videos = VideoGallery::latest()->get();
-        return view('admin.gallery.add_video_gallery',compact('videos'));
+        $videos = VideoGallery::with('category')->latest()->get();
+        $categories = GalleryCategory::forVideos()->orderBy('order_level')->orderBy('name_bn')->get();
+        return view('admin.gallery.add_video_gallery', compact('videos', 'categories'));
     }
 
     public function tech_web_store_video_gallery(Request $request){
         $request->validate([
             'title' => 'nullable|string|max:255',
+            'category_id' => 'nullable|exists:gallery_categories,id',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'video_file' => 'nullable|file|max:2097152', // up to 2GB
         ]);
@@ -128,6 +139,7 @@ class GalleryController extends Controller
         }
 
         $video = VideoGallery::create([
+            'category_id' => $request->category_id,
             'title' => $title,
             'thumbnail' => $thumbnailPath,
             'video_file' => $videoPath,
@@ -150,13 +162,15 @@ class GalleryController extends Controller
     }
 
     public function tech_web_edit_video_gallery($id){
-        $edit_video = VideoGallery::findOrFail($id);
-        return view('admin.gallery.edit_video_gallery',compact('edit_video'));
+        $edit_video = VideoGallery::with('category')->findOrFail($id);
+        $categories = GalleryCategory::forVideos()->orderBy('order_level')->orderBy('name_bn')->get();
+        return view('admin.gallery.edit_video_gallery', compact('edit_video', 'categories'));
     }
 
     public function tech_web_update_video_gallery(Request $request){
         $request->validate([
             'id' => 'required|exists:video_galleries,id',
+            'category_id' => 'nullable|exists:gallery_categories,id',
             'title' => 'nullable|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'video_file' => 'nullable|file|max:2097152',
@@ -225,6 +239,7 @@ class GalleryController extends Controller
             }
         }
 
+        $video->category_id = $request->category_id;
         $video->title = $title;
         $video->video_link = $videoLink;
         if ($request->has('status')) {
@@ -324,21 +339,59 @@ class GalleryController extends Controller
         return redirect()->back()->with('error', 'Video not found!');
     }
 
-    public function tech_web_gallery()
+    public function tech_web_gallery(Request $request)
     {
-        return view('frontend.gallery.gallery_page',[
-            'galleries'=>Gallery::where('status',1)->get(),
-            'banner'=>BannerAndTitle::where('page','image_gallery')->latest()->first(),
+        $categories = GalleryCategory::forPhotos()
+            ->withCount('activeGalleries')
+            ->having('active_galleries_count', '>', 0)
+            ->orderBy('order_level')
+            ->get();
 
+        $query = Gallery::where('status', 1)->with('category');
+
+        $activeCategory = null;
+        if ($request->filled('category')) {
+            $catSlug = $request->category;
+            $cat = GalleryCategory::where('slug', $catSlug)->orWhere('id', $catSlug)->first();
+            if ($cat) {
+                $query->where('category_id', $cat->id);
+                $activeCategory = $cat;
+            }
+        }
+
+        return view('frontend.gallery.gallery_page', [
+            'galleries'      => $query->latest()->get(),
+            'categories'     => $categories,
+            'activeCategory' => $activeCategory,
+            'banner'         => BannerAndTitle::where('page','image_gallery')->latest()->first(),
         ]);
     }
 
-    public function tech_web_video_gallery()
+    public function tech_web_video_gallery(Request $request)
     {
-        return view('frontend.gallery.video_gallery_page',[
-            'videos'=>VideoGallery::where('status',1)->get(),
-            'banner'=>BannerAndTitle::where('page','video_gallery')->latest()->first(),
+        $categories = GalleryCategory::forVideos()
+            ->withCount('activeVideoGalleries')
+            ->having('active_video_galleries_count', '>', 0)
+            ->orderBy('order_level')
+            ->get();
 
+        $query = VideoGallery::where('status', 1)->with('category');
+
+        $activeCategory = null;
+        if ($request->filled('category')) {
+            $catSlug = $request->category;
+            $cat = GalleryCategory::where('slug', $catSlug)->orWhere('id', $catSlug)->first();
+            if ($cat) {
+                $query->where('category_id', $cat->id);
+                $activeCategory = $cat;
+            }
+        }
+
+        return view('frontend.gallery.video_gallery_page', [
+            'videos'         => $query->latest()->get(),
+            'categories'     => $categories,
+            'activeCategory' => $activeCategory,
+            'banner'         => BannerAndTitle::where('page','video_gallery')->latest()->first(),
         ]);
     }
 

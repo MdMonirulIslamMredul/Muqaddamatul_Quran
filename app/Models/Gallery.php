@@ -10,6 +10,7 @@ class Gallery extends Model
     use HasFactory;
 
     protected $fillable = [
+        'category_id',
         'title',
         'description',
         'image',
@@ -19,9 +20,18 @@ class Gallery extends Model
 
     public static $data,$image,$imageName,$directory,$imageUrl;
 
+    /**
+     * Relationship with GalleryCategory
+     */
+    public function category()
+    {
+        return $this->belongsTo(GalleryCategory::class, 'category_id');
+    }
+
     public static function save_gallery($request)
     {
         self::$data = new Gallery();
+        self::$data->category_id = $request->category_id ?? null;
         self::$data->title = $request->title ?? null;
         self::$data->description = $request->description ?? null;
         self::$data->add_home = $request->add_home ?? null;
@@ -33,6 +43,7 @@ class Gallery extends Model
     public static function update_gallery($request)
     {
         self::$data = Gallery::find($request->id);
+        self::$data->category_id = $request->category_id ?? null;
         self::$data->title = $request->title ?? null;
         self::$data->description = $request->description ?? null;
         self::$data->add_home = $request->add_home ?? null;
