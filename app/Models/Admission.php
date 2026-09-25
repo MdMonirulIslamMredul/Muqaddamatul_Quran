@@ -82,9 +82,9 @@ class Admission extends Model
             case 'rejected':
                 return '<span class="badge bg-danger px-3 py-2">বাতিল (Rejected)</span>';
             case 'completed':
-                return '<span class="badge bg-secondary px-3 py-2">সম্পন্ন (Completed)</span>';
+                return '<span class="badge px-3 py-2" style="background-color: #475569; color: #ffffff;">সম্পন্ন (Completed)</span>';
             default:
-                return '<span class="badge bg-secondary px-3 py-2">' . ucfirst($this->status) . '</span>';
+                return '<span class="badge px-3 py-2" style="background-color: #475569; color: #ffffff;">' . ucfirst($this->status) . '</span>';
         }
     }
 
