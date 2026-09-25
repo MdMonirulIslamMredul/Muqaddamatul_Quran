@@ -1,3 +1,3 @@
 <footer class="footer">
-    © {{date('Y-m-d')}} Design & Developed by US
+    © {{date('Y-m-d')}} Design & Developed by Techweb BD IT
 </footer>
