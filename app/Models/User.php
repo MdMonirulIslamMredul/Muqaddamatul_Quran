@@ -19,8 +19,32 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin','roll_no',
+        'name', 'email', 'mobile', 'password', 'is_admin', 'role', 'roll_no', 'image',
     ];
+
+    /**
+     * Relationship: Online Admission applications.
+     */
+    public function onlineAdmissions()
+    {
+        return $this->hasMany(OnlineAdmission::class, 'user_id');
+    }
+
+    /**
+     * Relationship: Latest Online Admission application.
+     */
+    public function latestOnlineAdmission()
+    {
+        return $this->hasOne(OnlineAdmission::class, 'user_id')->latestOfMany();
+    }
+
+    /**
+     * Relationship: Online Admission Payments.
+     */
+    public function onlinePayments()
+    {
+        return $this->hasMany(OnlineAdmissionPayment::class, 'user_id');
+    }
 
     /**
      * The attributes that should be hidden for arrays.

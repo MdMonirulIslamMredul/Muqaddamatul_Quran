@@ -29,12 +29,26 @@
                                     {{ $logo->site_name ?? 'Muqaddamatul Quran Islami Academy' }}
                                 @endif
                             </h4>
-                            <small style="color: #95d5b2; font-size: 12px;">একটি আদর্শ ও আধুনিক দ্বীনি শিক্ষাপ্রতিষ্ঠান</small>
+                            <small style="color: #95d5b2; font-size: 12px;">
+                                @if(session()->get('language') == 'bangla')
+                                    একটি আদর্শ ও আধুনিক দ্বীনি শিক্ষাপ্রতিষ্ঠান
+                                @elseif(session()->get('language') == 'arabic')
+                                    مؤسسة تعليمية دينية نموذجية ومعاصرة
+                                @else
+                                    An exemplary and modern Islamic educational institution
+                                @endif
+                            </small>
                         </div>
                     </div>
 
                     <p style="color: #b7d5c8; font-size: 13.5px; line-height: 1.7; margin-bottom: 18px;">
-                        সহীহ কুরআন তিলাওয়াত, হিফজুল কুরআন, আরবি ভাষা ও দ্বীনি শিক্ষার এক অনন্য নির্ভরযোগ্য প্রতিষ্ঠান।
+                        @if(session()->get('language') == 'bangla')
+                            সহীহ কুরআন তিলাওয়াত, হিফজুল কুরআন, আরবি ভাষা ও দ্বীনি শিক্ষার এক অনন্য নির্ভরযোগ্য প্রতিষ্ঠান।
+                        @elseif(session()->get('language') == 'arabic')
+                            صرح تعليمي موثوق لتعليم تلاوة القرآن الكريم وحفظه واللغة العربية والعلوم الشرعية.
+                        @else
+                            A trusted center for authentic Quran recitation, Hifz, Arabic language, and Islamic studies.
+                        @endif
                     </p>
 
                     <div class="footer-contact-list" style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
@@ -120,12 +134,26 @@
                                 </div>
                             </div>
                         @empty
-                            <p style="color: #94a3b8; font-size: 13px;">কোনো নোটিশ পাওয়া যায়নি।</p>
+                            <p style="color: #94a3b8; font-size: 13px;">
+                                @if(session()->get('language') == 'bangla')
+                                    কোনো নোটিশ পাওয়া যায়নি।
+                                @elseif(session()->get('language') == 'arabic')
+                                    لا توجد إعلانات حالياً.
+                                @else
+                                    No notices found.
+                                @endif
+                            </p>
                         @endforelse
                     </div>
 
                     <a href="{{ route('frontend.notices.index') }}" style="display: inline-block; margin-top: 10px; color: #52b788; font-size: 12px; font-weight: 600; text-decoration: none;" onmouseover="this.style.color='#95d5b2'" onmouseout="this.style.color='#52b788'">
-                        সকল নোটিশ দেখুন &rarr;
+                        @if(session()->get('language') == 'bangla')
+                            সকল নোটিশ দেখুন &rarr;
+                        @elseif(session()->get('language') == 'arabic')
+                            عرض جميع الإعلانات &larr;
+                        @else
+                            View All Notices &rarr;
+                        @endif
                     </a>
                 </div>
             </div>
@@ -146,37 +174,58 @@
                     <ul class="list-unstyled" style="margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
                         <li>
                             <a href="{{ route('front.page') }}" style="color: #b7d5c8; text-decoration: none; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.color='#52b788'; this.style.paddingLeft='4px';" onmouseout="this.style.color='#b7d5c8'; this.style.paddingLeft='0';">
-                                <i class="fa fa-angle-right" style="color: #52b788;"></i> <span>হোমপেজ</span>
+                                <i class="fa fa-angle-right" style="color: #52b788;"></i>
+                                <span>
+                                    @if(session()->get('language') == 'bangla') হোমপেজ @elseif(session()->get('language') == 'arabic') الرئيسية @else Home @endif
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('about.page', 1) }}" style="color: #b7d5c8; text-decoration: none; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.color='#52b788'; this.style.paddingLeft='4px';" onmouseout="this.style.color='#b7d5c8'; this.style.paddingLeft='0';">
-                                <i class="fa fa-angle-right" style="color: #52b788;"></i> <span>আমাদের পরিচিতি</span>
+                                <i class="fa fa-angle-right" style="color: #52b788;"></i>
+                                <span>
+                                    @if(session()->get('language') == 'bangla') আমাদের পরিচিতি @elseif(session()->get('language') == 'arabic') من نحن @else About Us @endif
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('frontend.teachers.index') }}" style="color: #b7d5c8; text-decoration: none; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.color='#52b788'; this.style.paddingLeft='4px';" onmouseout="this.style.color='#b7d5c8'; this.style.paddingLeft='0';">
-                                <i class="fa fa-angle-right" style="color: #52b788;"></i> <span>শিক্ষকমণ্ডলী</span>
+                                <i class="fa fa-angle-right" style="color: #52b788;"></i>
+                                <span>
+                                    @if(session()->get('language') == 'bangla') শিক্ষকমণ্ডলী @elseif(session()->get('language') == 'arabic') الكادر التعليمي @else Faculty @endif
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('frontend.notices.index') }}" style="color: #b7d5c8; text-decoration: none; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.color='#52b788'; this.style.paddingLeft='4px';" onmouseout="this.style.color='#b7d5c8'; this.style.paddingLeft='0';">
-                                <i class="fa fa-angle-right" style="color: #52b788;"></i> <span>নোটিশ বোর্ড</span>
+                                <i class="fa fa-angle-right" style="color: #52b788;"></i>
+                                <span>
+                                    @if(session()->get('language') == 'bangla') নোটিশ বোর্ড @elseif(session()->get('language') == 'arabic') لوحة الإعلانات @else Notice Board @endif
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('online.admission') }}" style="color: #b7d5c8; text-decoration: none; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.color='#52b788'; this.style.paddingLeft='4px';" onmouseout="this.style.color='#b7d5c8'; this.style.paddingLeft='0';">
-                                <i class="fa fa-angle-right" style="color: #52b788;"></i> <span>ভর্তি আবেদন</span>
+                                <i class="fa fa-angle-right" style="color: #52b788;"></i>
+                                <span>
+                                    @if(session()->get('language') == 'bangla') ভর্তি আবেদন @elseif(session()->get('language') == 'arabic') طلب القبول @else Admission @endif
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('gallery.page') }}" style="color: #b7d5c8; text-decoration: none; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.color='#52b788'; this.style.paddingLeft='4px';" onmouseout="this.style.color='#b7d5c8'; this.style.paddingLeft='0';">
-                                <i class="fa fa-angle-right" style="color: #52b788;"></i> <span>ছবি গ্যালারি</span>
+                                <i class="fa fa-angle-right" style="color: #52b788;"></i>
+                                <span>
+                                    @if(session()->get('language') == 'bangla') ছবি গ্যালারি @elseif(session()->get('language') == 'arabic') معرض الصور @else Photo Gallery @endif
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('contacts') }}" style="color: #b7d5c8; text-decoration: none; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.color='#52b788'; this.style.paddingLeft='4px';" onmouseout="this.style.color='#b7d5c8'; this.style.paddingLeft='0';">
-                                <i class="fa fa-angle-right" style="color: #52b788;"></i> <span>যোগাযোগ</span>
+                                <i class="fa fa-angle-right" style="color: #52b788;"></i>
+                                <span>
+                                    @if(session()->get('language') == 'bangla') যোগাযোগ @elseif(session()->get('language') == 'arabic') اتصل بنا @else Contact Us @endif
+                                </span>
                             </a>
                         </li>
                     </ul>
@@ -199,13 +248,32 @@
                     <!-- Admission CTA Card -->
                     <div style="background: rgba(45, 106, 79, 0.4); border: 1px solid rgba(82, 183, 136, 0.3); border-radius: 8px; padding: 14px; margin-bottom: 16px;">
                         <h6 style="color: #ffffff; font-weight: 700; margin: 0 0 6px 0; font-size: 13.5px;">
-                            <i class="fa fa-graduation-cap text-theme-colored" style="color: #52b788;"></i> নতুন সেশনে ভর্তি চলছে
+                            <i class="fa fa-graduation-cap text-theme-colored" style="color: #52b788;"></i>
+                            @if(session()->get('language') == 'bangla')
+                                নতুন সেশনে ভর্তি চলছে
+                            @elseif(session()->get('language') == 'arabic')
+                                باب القبول مفتوح للتسجيل
+                            @else
+                                Admission Open for New Session
+                            @endif
                         </h6>
                         <p style="color: #b7d5c8; font-size: 12px; line-height: 1.5; margin-bottom: 10px;">
-                            সহজেই ঘরে বসে অনলাইনে ভর্তি আবেদন ফরম পূরণ করুন।
+                            @if(session()->get('language') == 'bangla')
+                                সহজেই ঘরে বসে অনলাইনে ভর্তি আবেদন ফরম পূরণ করুন।
+                            @elseif(session()->get('language') == 'arabic')
+                                قدّم طلب التحاقك الآن بكل يسر وسهولة عبر الإنترنت.
+                            @else
+                                Conveniently complete your online admission application from home.
+                            @endif
                         </p>
                         <a href="{{ route('online.admission') }}" class="btn btn-xs" style="background: #2d6a4f; color: #ffffff; font-weight: 700; padding: 5px 14px; border-radius: 4px; text-decoration: none; display: inline-block;" onmouseover="this.style.background='#52b788'; this.style.color='#1b4332';" onmouseout="this.style.background='#2d6a4f'; this.style.color='#ffffff';">
-                            ভর্তি আবেদন করুন &rarr;
+                            @if(session()->get('language') == 'bangla')
+                                ভর্তি আবেদন করুন &rarr;
+                            @elseif(session()->get('language') == 'arabic')
+                                قدّم طلب القبول &larr;
+                            @else
+                                Apply for Admission &rarr;
+                            @endif
                         </a>
                     </div>
 
@@ -214,10 +282,16 @@
                         @csrf
                         <div class="form-group mb-0">
                             <label style="color: #d8f3dc; font-size: 12px; margin-bottom: 6px; font-weight: 600;">
-                                নিয়মিত আপডেটের জন্য সাবস্ক্রাইব করুন
+                                @if(session()->get('language') == 'bangla')
+                                    নিয়মিত আপডেটের জন্য সাবস্ক্রাইব করুন
+                                @elseif(session()->get('language') == 'arabic')
+                                    اشترك معنا ليصلك كل جديد
+                                @else
+                                    Subscribe for regular updates
+                                @endif
                             </label>
                             <div class="input-group">
-                                <input type="email" name="email" class="form-control" placeholder="আপনার ইমেইল লিখুন..." style="height: 36px; background: rgba(255,255,255,0.08); border-color: rgba(82, 183, 136, 0.4); color: #fff; border-radius: 4px 0 0 4px; font-size: 12px;" required>
+                                <input type="email" name="email" class="form-control" placeholder="@if(session()->get('language') == 'bangla')আপনার ইমেইল লিখুন...@elseif(session()->get('language') == 'arabic')أدخل بريدك الإلكتروني...@else Enter your email...@endif" style="height: 36px; background: rgba(255,255,255,0.08); border-color: rgba(82, 183, 136, 0.4); color: #fff; border-radius: 4px 0 0 4px; font-size: 12px;" required>
                                 <span class="input-group-btn">
                                     <button type="submit" class="btn" style="height: 36px; background: #2d6a4f; color: #ffffff; border-color: #2d6a4f; border-radius: 0 4px 4px 0; padding: 6px 14px;">
                                         <i class="fa fa-paper-plane"></i>

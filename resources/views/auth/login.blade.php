@@ -73,18 +73,15 @@
                             <div class="form-group col-md-12">
                                 <label for="form_username_email">
                                     @if (session()->get('language') == 'bangla')
-                                        ব্যবহারকারীর নাম/ইমেল
+                                        ইমেল অথবা মোবাইল নম্বর
                                     @elseif (session()->get('language') == 'arabic')
-                                        اسم المستخدم/البريد الإلكتروني
+                                        البريد الإلكتروني أو رقم الهاتف
                                     @else
-                                        Username/Email
+                                        Email Address or Mobile Number
                                     @endif
                                 </label>
-                                <input type="email" id="email" name="email"
-                                    placeholder="@if (session()->get('language') == 'bangla') ব্যবহারকারীর নাম/ইমেল
-                              @elseif (session()->get('language') == 'arabic')
-اسم المستخدم/البريد الإلكتروني 
-                              @else Username/Email @endif"
+                                <input type="text" id="email" name="email" value="{{ old('email') }}" required autofocus
+                                    placeholder="@if (session()->get('language') == 'bangla') ইমেল অথবা মোবাইল নম্বর লিখুন... @elseif (session()->get('language') == 'arabic') أدخل البريد الإلكتروني أو الهاتف... @else Enter email or mobile number... @endif"
                                     class="form-control @error('email') is-invalid @enderror">
                             </div>
                         </div>

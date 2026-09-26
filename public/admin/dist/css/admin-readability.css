@@ -1,0 +1,422 @@
+/**
+ * Admin Panel Readability & Accessibility Enhancements
+ * Fixes text contrast, unreadable color clashes, missing BS5 utility polyfills,
+ * and improves form, table, card, and sidebar legibility.
+ */
+
+/* =========================================================
+   1. CRITICAL COLOR OVERRIDES
+   ========================================================= */
+
+/* Override Elite Admin's bad .text-secondary (#f8f9fa near-white) to a rich, high-contrast dark slate gray */
+.text-secondary,
+span.text-secondary,
+small.text-secondary,
+p.text-secondary,
+div.text-secondary,
+i.text-secondary,
+strong.text-secondary,
+label.text-secondary,
+td.text-secondary,
+th.text-secondary,
+a.text-secondary {
+    color: #475569 !important;
+}
+
+/* Improve .text-muted for clear contrast on white/light backgrounds (WCAG AA compliant) */
+.text-muted,
+small.text-muted,
+span.text-muted,
+p.text-muted,
+div.text-muted {
+    color: #525f7f !important;
+}
+
+/* Improve .text-white-50 on dark/colored cards so it is not dim or washed out */
+.text-white-50,
+small.text-white-50,
+span.text-white-50,
+p.text-white-50 {
+    color: rgba(255, 255, 255, 0.90) !important;
+}
+
+/* Improve .text-warning on white cards (bright yellow is unreadable, amber/bronze is high contrast) */
+.text-warning,
+span.text-warning,
+h1.text-warning,
+h2.text-warning,
+h3.text-warning,
+h4.text-warning,
+h5.text-warning,
+h6.text-warning,
+strong.text-warning,
+label.text-warning,
+a.text-warning {
+    color: #b45309 !important;
+}
+
+/* Base text color inside page content */
+.page-wrapper {
+    color: #1e293b;
+}
+
+/* Card titles and headers */
+.card-title {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.card-header small,
+.card-header .text-muted,
+.card-header .text-secondary,
+.page-wrapper small.text-muted,
+.page-wrapper small.text-secondary {
+    color: #475569 !important;
+    font-weight: 500;
+}
+
+/* Subtitles under main page titles */
+.page-wrapper h1+small,
+.page-wrapper h2+small,
+.page-wrapper h3+small,
+.page-wrapper h4+small,
+.page-wrapper h5+small,
+.page-wrapper h6+small {
+    color: #475569 !important;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+/* =========================================================
+   2. BOOTSTRAP 5 OPACITY & UTILITY POLYFILLS FOR BS4
+   ========================================================= */
+
+.bg-white.bg-opacity-25 {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.bg-white.bg-opacity-50 {
+    background-color: rgba(255, 255, 255, 0.50) !important;
+}
+
+.bg-white.bg-opacity-75 {
+    background-color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.bg-primary.bg-opacity-10 {
+    background-color: rgba(13, 110, 253, 0.10) !important;
+}
+
+.bg-info.bg-opacity-10 {
+    background-color: rgba(14, 165, 233, 0.12) !important;
+}
+
+.bg-success.bg-opacity-10 {
+    background-color: rgba(22, 163, 74, 0.12) !important;
+}
+
+.bg-warning.bg-opacity-10 {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+}
+
+.bg-danger.bg-opacity-10 {
+    background-color: rgba(220, 53, 69, 0.10) !important;
+}
+
+.bg-dark.bg-opacity-75 {
+    background-color: rgba(15, 23, 42, 0.75) !important;
+}
+
+/* =========================================================
+   3. BADGES ENHANCEMENT
+   ========================================================= */
+
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Fix light badges so they never have white or faint text */
+.badge.bg-light,
+.badge-light {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+/* Fix secondary badges */
+.badge.bg-secondary,
+.badge-secondary {
+    background-color: #64748b !important;
+    color: #ffffff !important;
+}
+
+/* Polyfill for soft badges commonly used in BS5 */
+.badge.bg-primary.bg-opacity-10 {
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
+    border: 1px solid #bae6fd !important;
+}
+
+.badge.bg-info.bg-opacity-10 {
+    background-color: #e0f7fa !important;
+    color: #00796b !important;
+    border: 1px solid #b2ebf2 !important;
+}
+
+.badge.bg-success.bg-opacity-10 {
+    background-color: #dcfce7 !important;
+    color: #15803d !important;
+    border: 1px solid #bbf7d0 !important;
+}
+
+.badge.bg-warning.bg-opacity-10 {
+    background-color: #fef3c7 !important;
+    color: #b45309 !important;
+    border: 1px solid #fde68a !important;
+}
+
+.badge.bg-danger.bg-opacity-10 {
+    background-color: #fee2e2 !important;
+    color: #b91c1c !important;
+    border: 1px solid #fecaca !important;
+}
+
+/* Yellow warning badges with dark text */
+.badge.bg-warning,
+.badge-warning {
+    background-color: #f59e0b !important;
+    color: #1e293b !important;
+}
+
+/* =========================================================
+   4. SIDEBAR NAVIGATION
+   ========================================================= */
+
+/* Darken inactive navigation items so they are easily readable on white sidebar */
+.sidebar-nav ul li a {
+    color: #334155 !important;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 25px 10px 15px;
+}
+
+.sidebar-nav ul li a:hover,
+.sidebar-nav ul li a:focus {
+    color: #1b4332 !important;
+    background-color: #f0fdf4;
+}
+
+.sidebar-nav ul li.active>a,
+.sidebar-nav ul li a.active {
+    color: #1b4332 !important;
+    font-weight: 700 !important;
+    background-color: #ecfdf5;
+}
+
+.sidebar-nav ul li a i,
+.sidebar-nav ul li a svg {
+    opacity: 0.95;
+    margin-right: 4px;
+}
+
+/* Sidebar category section headers */
+.sidebar-nav .nav-small-cap {
+    color: #475569 !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.75px !important;
+}
+
+/* =========================================================
+   5. FORMS & INPUT CONTROLS
+   ========================================================= */
+
+/* Form labels - crisp, dark, bold */
+label,
+.form-label,
+.form-group>label {
+    color: #1e293b !important;
+    font-weight: 600;
+    font-size: 13.5px;
+    margin-bottom: 0.35rem;
+}
+
+.form-control,
+.form-select,
+select.form-control {
+    color: #1e293b !important;
+    border-color: #cbd5e1;
+    font-size: 13.5px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2d6a4f;
+    box-shadow: 0 0 0 0.2rem rgba(45, 106, 79, 0.15);
+}
+
+.form-control::placeholder,
+select::placeholder,
+textarea::placeholder {
+    color: #64748b !important;
+    opacity: 1;
+}
+
+/* Disabled inputs - high contrast text on light gray */
+.form-control:disabled,
+.form-select:disabled,
+select:disabled,
+input:disabled,
+textarea:disabled {
+    background-color: #f1f5f9 !important;
+    color: #334155 !important;
+    opacity: 1 !important;
+    cursor: not-allowed;
+    border-color: #cbd5e1 !important;
+}
+
+/* =========================================================
+   6. TABLES & DATA LISTS
+   ========================================================= */
+
+.table thead th {
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 13px;
+    background-color: #f8fafc !important;
+    border-bottom: 2px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.table td {
+    color: #1e293b;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(241, 245, 249, 0.75);
+}
+
+/* Empty state in tables */
+.table td.text-center.text-muted,
+.table td.text-center.text-secondary {
+    color: #64748b !important;
+    font-weight: 500;
+}
+
+/* =========================================================
+   7. TOPBAR HEADER
+   ========================================================= */
+
+.topbar .text-white-50 {
+    color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.input-group {
+    flex-wrap: nowrap !important;
+}
+
+.topbar-quick-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.topbar-quick-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Remove unwanted duplicate padding-top on page-wrapper */
+.fixed-layout .page-wrapper,
+.page-wrapper {
+    padding-top: 0 !important;
+}
+
+/* Fix Dropdown Anchor Positioning across topbar */
+.topbar .nav-item.dropdown,
+.topbar .u-pro,
+.topbar .dropdown,
+.topbar .top-navbar .navbar-nav>.nav-item.show,
+.topbar .top-navbar .navbar-nav>.nav-item {
+    position: relative !important;
+}
+
+.topbar .u-pro .dropdown-menu,
+.topbar .dropdown-menu {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+    top: 100% !important;
+    margin-top: 8px !important;
+    width: auto !important;
+    min-width: 220px !important;
+    max-width: 280px !important;
+    transform: none !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    border-radius: 8px !important;
+    z-index: 1070 !important;
+    float: none !important;
+}
+
+/* Breadcrumb separator divider fix */
+.breadcrumb-item+.breadcrumb-item::before {
+    content: var(--bs-breadcrumb-divider, "/") !important;
+    float: left;
+    padding-right: 0.5rem;
+    color: #6c757d;
+}
+
+/* =========================================================
+   8. UNIVERSAL ICON RENDERING & BADGE CENTERING
+   ========================================================= */
+
+/* Ensure all circular icon badges and avatar holders are perfect centered flex boxes */
+.rounded-circle.d-flex,
+.avatar-icon,
+.icon-circle,
+.kpi-icon-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* Fix Bootstrap Icons (bi) & FontAwesome (fa) alignment and line-height */
+i.bi,
+span.bi,
+[class^="bi-"],
+[class*=" bi-"],
+i.fa,
+i.fas,
+i.far,
+i.fab {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+}
+
+/* Reset inner icon margins/paddings when inside circular badges */
+.rounded-circle.d-flex i,
+.rounded-circle.d-flex svg,
+.kpi-icon-badge i,
+.kpi-icon-badge svg {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ensure icons inside buttons & badges maintain consistent baseline */
+.btn i,
+.btn svg,
+.badge i,
+.badge svg {
+    line-height: 1 !important;
+    vertical-align: -0.125em !important;
+}

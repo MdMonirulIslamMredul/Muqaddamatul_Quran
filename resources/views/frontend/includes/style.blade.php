@@ -1,10 +1,3 @@
-<!-- Favicon and Touch Icons -->
-<link href="{{ asset('frontend/images/favicon.png') }}" rel="shortcut icon" type="image/png">
-<link href="{{ asset('frontend/images/apple-touch-icon.png') }}" rel="apple-touch-icon">
-<link href="{{ asset('frontend/images/apple-touch-icon-72x72.png') }}" rel="apple-touch-icon" sizes="72x72">
-<link href="{{ asset('frontend/images/apple-touch-icon-114x114.png') }}" rel="apple-touch-icon" sizes="114x114">
-<link href="{{ asset('frontend/images/apple-touch-icon-144x144.png') }}" rel="apple-touch-icon" sizes="144x144">
-
 <!-- Stylesheet -->
 <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('frontend/css/jquery-ui.min.css') }}" rel="stylesheet" type="text/css">

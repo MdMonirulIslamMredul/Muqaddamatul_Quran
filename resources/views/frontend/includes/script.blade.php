@@ -43,8 +43,7 @@
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
-        "error": { "color": "red" }
-    }
+    };
 });
 
 </script>
