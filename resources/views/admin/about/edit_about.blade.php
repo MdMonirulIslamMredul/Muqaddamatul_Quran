@@ -90,7 +90,7 @@
                                 <textarea class="form-control rich-editor" rows="5" name="specialties_bn" placeholder="বাংলায় বিশেষত্ব বিস্তারিত...">{!! $about->specialties_bn !!}</textarea>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold text-secondary"><i class="fa fa-book-open me-1"></i> Specialties (Arabic - العربية)</label>
+                                <label class="form-label fw-semibold text-dark"><i class="fa fa-book-open me-1"></i> Specialties (Arabic - العربية)</label>
                                 <textarea class="form-control rich-editor" dir="rtl" rows="5" name="specialties_ab" placeholder="المميزات الخاصة بالعربية...">{!! $about->specialties_ab !!}</textarea>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                                 <textarea class="form-control rich-editor" rows="5" name="features_bn" placeholder="বাংলায় বৈশিষ্ট্যসমূহ বিস্তারিত...">{!! $about->features_bn !!}</textarea>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold text-secondary"><i class="fa fa-book-open me-1"></i> Features (Arabic - العربية)</label>
+                                <label class="form-label fw-semibold text-dark"><i class="fa fa-book-open me-1"></i> Features (Arabic - العربية)</label>
                                 <textarea class="form-control rich-editor" dir="rtl" rows="5" name="features_ab" placeholder="الخصائص والمميزات بالعربية...">{!! $about->features_ab !!}</textarea>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                                 <textarea class="form-control rich-editor" rows="5" name="hifz_edu_details_bn" placeholder="বাংলায় হিফজ শিক্ষা বিস্তারিত...">{!! $about->hifz_edu_details_bn !!}</textarea>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold text-secondary"><i class="fa fa-book-open me-1"></i> Hifz Edu Details (Arabic - العربية)</label>
+                                <label class="form-label fw-semibold text-dark"><i class="fa fa-book-open me-1"></i> Hifz Edu Details (Arabic - العربية)</label>
                                 <textarea class="form-control rich-editor" dir="rtl" rows="5" name="hifz_edu_details_ab" placeholder="تفاصيل برنامج تحفيظ القرآن الكريم بالعربية...">{!! $about->hifz_edu_details_ab !!}</textarea>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                                 <textarea class="form-control rich-editor" rows="5" name="achievement_bn" placeholder="বাংলায় সাফল্য ও অর্জনসমূহ বিস্তারিত...">{!! $about->achievement_bn !!}</textarea>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold text-secondary"><i class="fa fa-book-open me-1"></i> Achievements (Arabic - العربية)</label>
+                                <label class="form-label fw-semibold text-dark"><i class="fa fa-book-open me-1"></i> Achievements (Arabic - العربية)</label>
                                 <textarea class="form-control rich-editor" dir="rtl" rows="5" name="achievement_ab" placeholder="الإنجازات والنجاحات بالعربية...">{!! $about->achievement_ab !!}</textarea>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                                 <textarea class="form-control rich-editor" rows="5" name="int_achievement_bn" placeholder="বাংলায় আন্তর্জাতিক সাফল্য ও অর্জনসমূহ...">{!! $about->int_achievement_bn !!}</textarea>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold text-secondary"><i class="fa fa-book-open me-1"></i> Int. Achievements (Arabic - العربية)</label>
+                                <label class="form-label fw-semibold text-dark"><i class="fa fa-book-open me-1"></i> Int. Achievements (Arabic - العربية)</label>
                                 <textarea class="form-control rich-editor" dir="rtl" rows="5" name="int_achievement_ab" placeholder="الإنجازات الدولية والمسابقات بالعربية...">{!! $about->int_achievement_ab !!}</textarea>
                             </div>
                         </div>

@@ -94,7 +94,7 @@
                             <div class="col-md-4">
                                 <div class="border rounded p-3 bg-light h-100">
                                     <h6 class="text-uppercase text-muted fw-bold mb-2 small">Description (English)</h6>
-                                    <div class="text-secondary small" style="max-height: 150px; overflow-y: auto;">
+                                    <div class="text-dark small" style="max-height: 150px; overflow-y: auto;">
                                         {!! $about->des_eng ?? '<em>No description provided</em>' !!}
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                             <div class="col-md-4">
                                 <div class="border rounded p-3 bg-light h-100">
                                     <h6 class="text-uppercase text-muted fw-bold mb-2 small">Description (Bangla)</h6>
-                                    <div class="text-secondary small" style="max-height: 150px; overflow-y: auto;">
+                                    <div class="text-dark small" style="max-height: 150px; overflow-y: auto;">
                                         {!! $about->des_bangla ?? '<em>No description provided</em>' !!}
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                             <div class="col-md-4">
                                 <div class="border rounded p-3 bg-light h-100">
                                     <h6 class="text-uppercase text-muted fw-bold mb-2 small">Description (Arabic)</h6>
-                                    <div class="text-secondary small" style="max-height: 150px; overflow-y: auto;">
+                                    <div class="text-dark small" style="max-height: 150px; overflow-y: auto;">
                                         {!! $about->des_ab ?? '<em>No description provided</em>' !!}
                                     </div>
                                 </div>
@@ -126,19 +126,19 @@
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #007bff; color: #ffffff;">English</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->specialties ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #28a745; color: #ffffff;">Bangla (বাংলা)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->specialties_bn ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->specialties_ab ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
@@ -157,19 +157,19 @@
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #007bff; color: #ffffff;">English</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->features ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #28a745; color: #ffffff;">Bangla (বাংলা)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->features_bn ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->features_ab ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
@@ -184,19 +184,19 @@
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #007bff; color: #ffffff;">English</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->hifz_edu_details ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #28a745; color: #ffffff;">Bangla (বাংলা)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->hifz_edu_details_bn ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->hifz_edu_details_ab ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
@@ -215,19 +215,19 @@
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #007bff; color: #ffffff;">English</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->achievement ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #28a745; color: #ffffff;">Bangla (বাংলা)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->achievement_bn ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->achievement_ab ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
@@ -246,19 +246,19 @@
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #007bff; color: #ffffff;">English</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->int_achievement ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #28a745; color: #ffffff;">Bangla (বাংলা)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->int_achievement_bn ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <span class="badge mb-2" style="background-color: #6c757d; color: #ffffff;">Arabic (العربية)</span>
-                                                <div class="text-secondary small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                                <div class="text-dark small border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
                                                     {!! $about->int_achievement_ab ?? '<em>Not specified</em>' !!}
                                                 </div>
                                             </div>
@@ -390,7 +390,7 @@
                                     <textarea class="form-control rich-editor" rows="4" name="specialties_bn" placeholder="বাংলায় বিশেষত্ব..."></textarea>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label fw-semibold text-secondary"><i class="fa fa-star me-1"></i> Specialties (Arabic - العربية)</label>
+                                    <label class="form-label fw-semibold text-dark"><i class="fa fa-star me-1"></i> Specialties (Arabic - العربية)</label>
                                     <textarea class="form-control rich-editor" rows="4" name="specialties_ab" placeholder="المميزات بالعربية..."></textarea>
                                 </div>
                             </div>
@@ -406,7 +406,7 @@
                                     <textarea class="form-control rich-editor" rows="4" name="features_bn" placeholder="বাংলায় বৈশিষ্ট্যসমূহ..."></textarea>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label fw-semibold text-secondary"><i class="fa fa-check-circle me-1"></i> Features (Arabic - العربية)</label>
+                                    <label class="form-label fw-semibold text-dark"><i class="fa fa-check-circle me-1"></i> Features (Arabic - العربية)</label>
                                     <textarea class="form-control rich-editor" rows="4" name="features_ab" placeholder="الخصائص بالعربية..."></textarea>
                                 </div>
                             </div>
@@ -422,7 +422,7 @@
                                     <textarea class="form-control rich-editor" rows="4" name="hifz_edu_details_bn" placeholder="বাংলায় হিফজ শিক্ষা বিস্তারিত..."></textarea>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label fw-semibold text-secondary"><i class="fa fa-book me-1"></i> Hifz Edu Details (Arabic - العربية)</label>
+                                    <label class="form-label fw-semibold text-dark"><i class="fa fa-book me-1"></i> Hifz Edu Details (Arabic - العربية)</label>
                                     <textarea class="form-control rich-editor" rows="4" name="hifz_edu_details_ab" placeholder="تفاصيل تحفيظ القرآن بالعربية..."></textarea>
                                 </div>
                             </div>
@@ -438,7 +438,7 @@
                                     <textarea class="form-control rich-editor" rows="4" name="achievement_bn" placeholder="বাংলায় সাফল্য ও অর্জনসমূহ..."></textarea>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label fw-semibold text-secondary"><i class="fa fa-trophy me-1"></i> Achievements (Arabic - العربية)</label>
+                                    <label class="form-label fw-semibold text-dark"><i class="fa fa-trophy me-1"></i> Achievements (Arabic - العربية)</label>
                                     <textarea class="form-control rich-editor" rows="4" name="achievement_ab" placeholder="الإنجازات بالعربية..."></textarea>
                                 </div>
                             </div>
@@ -454,7 +454,7 @@
                                     <textarea class="form-control rich-editor" rows="4" name="int_achievement_bn" placeholder="বাংলায় আন্তর্জাতিক সাফল্য ও অর্জনসমূহ..."></textarea>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label fw-semibold text-secondary"><i class="fa fa-globe me-1"></i> Int. Achievements (Arabic - العربية)</label>
+                                    <label class="form-label fw-semibold text-dark"><i class="fa fa-globe me-1"></i> Int. Achievements (Arabic - العربية)</label>
                                     <textarea class="form-control rich-editor" rows="4" name="int_achievement_ab" placeholder="الإنجازات الدولية بالعربية..."></textarea>
                                 </div>
                             </div>
